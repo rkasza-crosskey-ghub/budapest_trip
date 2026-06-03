@@ -9,19 +9,18 @@
 ==================================================================
   HOGYAN SZERKESZD EZT AZ OLDALT? (friss infó beírása)
 ==================================================================
-  1. A teljes tartalom lentebb, a <script id="data"> blokkban van,
-     jól olvasható listákban. NE a HTML-t szerkeszd, hanem azt!
-  2. Keresd meg a megfelelő szekciót (sights, food, nightlife, stb.)
-  3. Egy bejegyzés így néz ki:
-        { tag:"Címke", title:"Név", text:"Leírás...", info:"pl. tipp",
-          img:"KÉP-URL vagy üres", map:true }
-     - img  : kép linkje. Ha üres ("") vagy rossz, a kártya kép nélkül jelenik meg.
-     - map  : ha true, megjelenik egy "📍 Map" gomb (Google Maps kereséssel).
-     - link : ha megadod, megjelenik egy "↗ Website" gomb.
-  4. Új elem: másolj egy { ... } sort, írd át, tegyél a végére vesszőt.
-  5. Mentés után töltsd fel újra GitHubra -> a megosztható link frissül.
-  KÉPEK: a https://commons.wikimedia.org/wiki/Special:FilePath/FÁJLNÉV?width=800
-         formátum mindig friss, jogtiszta képet ad (Wikimedia Commons).
+  1. A teljes tartalom lentebb, a <script id="data"> blokkban van.
+     NE a HTML-t szerkeszd, hanem azt!
+  2. KÉTNYELVŰ: minden szöveg {en:"angol", sv:"svéd"} formátumú.
+        { tag:{en:"Tag",sv:"..."}, title:{en:"Név",sv:"..."},
+          text:{en:"...",sv:"..."}, info:{en:"...",sv:"..."},
+          img:"KÉP-URL", map:true, link:"https://..." }
+     - img/map/link/tag/info elhagyható.
+     - A jobb felső EN/SV kapcsoló vált a két nyelv között.
+  3. A felső sávok / címsorok fordítása a HTML-ben data-en="" data-sv=""
+     attribútumokban van — ott írd át.
+  4. Mentés után töltsd fel újra GitHubra -> a megosztható link frissül.
+  KÉPEK: https://commons.wikimedia.org/wiki/Special:FilePath/FÁJLNÉV?width=800
 ==================================================================
 -->
 
@@ -78,7 +77,7 @@
     background:var(--rust-dk);color:#fff;text-align:center;padding:18px 24px;
     border-bottom:3px solid var(--gold);
   }
-  .contact strong{color:#ffe1ad;letter-spacing:.04em}
+  .contact .lead{color:#ffe1ad;letter-spacing:.03em}
   .contact a{color:#fff;font-weight:bold;text-decoration:none;border-bottom:1px dotted #ffd58a}
   .contact .small{display:block;font-size:.82rem;opacity:.85;margin-top:4px;font-style:italic}
 
@@ -95,6 +94,12 @@
     border-radius:2px;transition:.2s;
   }
   nav a:hover{background:var(--rust);color:#fff}
+  .lang{display:flex;border:1px solid var(--ink);border-radius:99px;overflow:hidden;margin-left:10px}
+  .lang button{
+    font-family:Georgia,serif;font-size:.72rem;letter-spacing:.12em;font-weight:bold;
+    padding:6px 13px;border:none;background:transparent;color:var(--ink);cursor:pointer;transition:.2s;
+  }
+  .lang button.active{background:var(--rust);color:#fff}
 
   /* ---------- SECTIONS ---------- */
   section{padding:80px 0;border-bottom:1px solid var(--line)}
@@ -166,6 +171,7 @@
 
   @media(max-width:640px){
     nav .brand{width:100%;margin-bottom:6px}
+    .lang{margin-left:auto}
     section{padding:56px 0}
   }
 </style>
@@ -178,29 +184,34 @@
        onerror="this.style.display='none'">
   <div class="veil"></div>
   <div class="hero-inner">
-    <div class="kicker">A Girls' Trip Guide &middot; 5–8 July</div>
+    <div class="kicker" data-en="A Girls' Trip Guide · 5–8 July" data-sv="En tjejresa-guide · 5–8 juli"></div>
     <h1>Buda<em>pest</em></h1>
-    <p>The pearl of the Danube — thermal baths, ruin bars, a thousand years of history and a skyline that glows at night. Everything five friends need for the perfect long weekend.</p>
+    <p data-en="The pearl of the Danube — thermal baths, ruin bars, a thousand years of history and a skyline that glows at night. Everything five friends need for the perfect long weekend."
+       data-sv="Donaus pärla — termalbad, ruinbarer, tusen år av historia och en stadssiluett som glöder på natten. Allt fem vänner behöver för den perfekta långhelgen."></p>
   </div>
-  <div class="scroll-hint">scroll down</div>
+  <div class="scroll-hint" data-en="scroll down" data-sv="scrolla ner"></div>
 </header>
 
 <div class="contact">
-  <strong>★ Local help</strong> — anything goes wrong, you can call
+  <span class="lead" data-en="★ Local help — if anything goes wrong, you can call " data-sv="★ Lokal hjälp — om något går snett kan ni ringa "></span>
   <a href="tel:+36204759235">Roland Kasza · +36 20 475 9235</a>
-  <span class="small">A local friend of yours back home — happy to help if you get stuck.</span>
+  <span class="small" data-en="A local friend of yours back home — happy to help if you get stuck." data-sv="En lokal vän hemifrån — hjälper gärna till om ni kör fast."></span>
 </div>
 
 <nav>
   <div class="wrap">
     <span class="brand">★ BUDAPEST</span>
-    <a href="#stay">Where to stay</a>
-    <a href="#sights">Sights</a>
-    <a href="#nature">Baths &amp; parks</a>
-    <a href="#food">Food</a>
-    <a href="#night">Nightlife</a>
-    <a href="#plan">3-day plan</a>
-    <a href="#info">Tips</a>
+    <a href="#stay"   data-en="Where to stay" data-sv="Boende"></a>
+    <a href="#sights" data-en="Sights"        data-sv="Sevärdheter"></a>
+    <a href="#nature" data-en="Baths &amp; parks" data-sv="Bad &amp; parker"></a>
+    <a href="#food"   data-en="Food"          data-sv="Mat"></a>
+    <a href="#night"  data-en="Nightlife"     data-sv="Nattliv"></a>
+    <a href="#plan"   data-en="3-day plan"    data-sv="3-dagarsplan"></a>
+    <a href="#info"   data-en="Tips"          data-sv="Tips"></a>
+    <div class="lang" id="lang">
+      <button data-l="en">EN</button>
+      <button data-l="sv">SV</button>
+    </div>
   </div>
 </nav>
 
@@ -208,8 +219,10 @@
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="sec-num">00</span>
-      <h2>Buda or Pest?</h2>
-      <p class="lead">Short answer: stay in <b>Pest</b>. Buda is the pretty, hilly, historic side (castle, views) — but Pest is where the food, drinks, culture and walkable energy are. Here are the best neighbourhoods.</p>
+      <h2 data-en="Buda or Pest?" data-sv="Buda eller Pest?"></h2>
+      <p class="lead"
+         data-en="Short answer: stay in <b>Pest</b>. Buda is the pretty, hilly, historic side (castle, views) — but Pest is where the food, drinks, culture and walkable energy are. Here are the best neighbourhoods."
+         data-sv="Kort svar: bo i <b>Pest</b>. Buda är den vackra, kuperade, historiska sidan (borg, vyer) — men Pest är där maten, drinkarna, kulturen och den promenadvänliga energin finns. Här är de bästa kvarteren."></p>
       <div class="accent"></div>
     </div>
     <div class="grid" id="grid-stay"></div>
@@ -220,8 +233,10 @@
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="sec-num">01</span>
-      <h2>Sights &amp; beautiful buildings</h2>
-      <p class="lead">The must-sees — from the neo-Gothic Parliament to the fairy-tale towers of the Buda Castle district.</p>
+      <h2 data-en="Sights &amp; beautiful buildings" data-sv="Sevärdheter &amp; vackra byggnader"></h2>
+      <p class="lead"
+         data-en="The must-sees — from the neo-Gothic Parliament to the fairy-tale towers of the Buda Castle district."
+         data-sv="Måstena — från det nygotiska parlamentet till de sagolika tornen i Budaborgens kvarter."></p>
       <div class="accent"></div>
     </div>
     <div class="grid" id="grid-sights"></div>
@@ -232,8 +247,10 @@
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="sec-num">02</span>
-      <h2>Baths, parks &amp; nature</h2>
-      <p class="lead">Steaming thermal pools, a fairy-tale castle on a lake, a green island in the Danube, and a half-day escape up into the Buda Hills.</p>
+      <h2 data-en="Baths, parks &amp; nature" data-sv="Bad, parker &amp; natur"></h2>
+      <p class="lead"
+         data-en="Steaming thermal pools, a fairy-tale castle on a lake, a green island in the Danube, and a half-day escape up into the Buda Hills."
+         data-sv="Ångande termalbassänger, ett sagoslott vid en sjö, en grön ö i Donau, och en halvdagsutflykt upp i Buda-bergen."></p>
       <div class="accent"></div>
     </div>
     <div class="grid" id="grid-nature"></div>
@@ -244,8 +261,10 @@
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="sec-num">03</span>
-      <h2>Eat &amp; drink well</h2>
-      <p class="lead">Aesthetic, tasty and <i>not</i> tourist traps. July is peak season — book dinner ahead!</p>
+      <h2 data-en="Eat &amp; drink well" data-sv="Ät &amp; drick gott"></h2>
+      <p class="lead"
+         data-en="Aesthetic, tasty and <i>not</i> tourist traps. July is peak season — book dinner ahead!"
+         data-sv="Estetiskt, gott och <i>inga</i> turistfällor. Juli är högsäsong — boka middag i förväg!"></p>
       <div class="accent"></div>
     </div>
     <div class="grid" id="grid-food"></div>
@@ -256,8 +275,10 @@
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="sec-num">04</span>
-      <h2>Nightlife &amp; views</h2>
-      <p class="lead">Ruin bars, rooftop cocktails, a Ferris wheel and the magic of the lit-up Danube from the water.</p>
+      <h2 data-en="Nightlife &amp; views" data-sv="Nattliv &amp; utsikter"></h2>
+      <p class="lead"
+         data-en="Ruin bars, rooftop cocktails, a Ferris wheel and the magic of the lit-up Danube from the water."
+         data-sv="Ruinbarer, takcocktails, ett pariserhjul och magin i upplysta Donau från vattnet."></p>
       <div class="accent"></div>
     </div>
     <div class="grid" id="grid-night"></div>
@@ -268,8 +289,10 @@
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="sec-num">05</span>
-      <h2>A suggested 3-day plan</h2>
-      <p class="lead">A loose, geographically-logical route so you're never zig-zagging across the city. Mix and match freely.</p>
+      <h2 data-en="A suggested 3-day plan" data-sv="Ett förslag på 3-dagarsplan"></h2>
+      <p class="lead"
+         data-en="A loose, geographically-logical route so you're never zig-zagging across the city. Mix and match freely."
+         data-sv="En lös, geografiskt logisk rutt så att ni aldrig zickzackar genom staden. Blanda fritt."></p>
       <div class="accent"></div>
     </div>
     <div class="days" id="grid-days"></div>
@@ -280,8 +303,10 @@
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="sec-num">06</span>
-      <h2>Practical tips</h2>
-      <p class="lead">Transport, taxis, money and the little things that make it smooth.</p>
+      <h2 data-en="Practical tips" data-sv="Praktiska tips"></h2>
+      <p class="lead"
+         data-en="Transport, taxis, money and the little things that make it smooth."
+         data-sv="Transport, taxi, pengar och de små sakerna som gör det smidigt."></p>
       <div class="accent"></div>
     </div>
     <div class="grid" id="grid-info"></div>
@@ -290,17 +315,15 @@
 
 <footer>
   <div class="wrap">
-    <h3>Have an amazing trip, girls! <span class="gold">★</span></h3>
-    <p>Put together with love for your July long weekend in Budapest.</p>
-    <p>Stuck or need a local tip? Call <a href="tel:+36204759235">Roland Kasza · +36 20 475 9235</a>.</p>
+    <h3 data-en="Have an amazing trip, girls! <span class='gold'>★</span>" data-sv="Ha en fantastisk resa, tjejer! <span class='gold'>★</span>"></h3>
+    <p data-en="Put together with love for your July long weekend in Budapest." data-sv="Sammanställt med kärlek inför er långhelg i Budapest i juli."></p>
+    <p><span data-en="Stuck or need a local tip? Call " data-sv="Kör ni fast eller behöver ett lokalt tips? Ring "></span><a href="tel:+36204759235">Roland Kasza · +36 20 475 9235</a>.</p>
   </div>
 </footer>
 
 <!--
 ==================================================================
-  ★★★  EZT A RÉSZT SZERKESZD  ★★★
-  Itt van minden tartalom. Írd át, törölj, vagy adj hozzá elemeket.
-  { tag, title, text, info, img, map, link } — tag/info/img/map/link elhagyható.
+  ★★★  EZT A RÉSZT SZERKESZD  ★★★  (minden szöveg {en, sv})
 ==================================================================
 -->
 <script id="data">
@@ -310,112 +333,232 @@ const W = "?width=800";
 const TARTALOM = {
 
   stay: [
-    { tag:"Top pick", title:"District VI · Terézváros", text:"The sweet spot. Safe, elegant, home to grand Andrássy Avenue (the 'Champs-Élysées of Budapest') and a short walk from both the nightlife and the major sights. Best balance of culture and fun.", info:"Great base for a first visit", map:true },
-    { tag:"Nightlife", title:"District VII · Jewish Quarter", text:"Erzsébetváros — the buzzing heart of the ruin-bar scene. Step out the door and you're surrounded by bars and restaurants. Just check recent reviews so your place isn't right above a loud bar.", info:"Lively day & night", map:true },
-    { tag:"Upscale", title:"District V · Belváros", text:"The polished downtown by the river and Parliament. Cleaner and more upmarket, a touch pricier and slightly further from the trendy spots — lovely if you want calm and elegance.", info:"Riverside & central", map:true }
+    { tag:{en:"Top pick",sv:"Bästa valet"}, map:true,
+      title:{en:"District VI · Terézváros",sv:"Distrikt VI · Terézváros"},
+      text:{en:"The sweet spot. Safe, elegant, home to grand Andrássy Avenue (the 'Champs-Élysées of Budapest') and a short walk from both the nightlife and the major sights. Best balance of culture and fun.",
+            sv:"Den perfekta mittpunkten. Tryggt, elegant, hem för den pampiga Andrássy-avenyn ('Budapests Champs-Élysées') och en kort promenad från både nattlivet och de stora sevärdheterna. Bästa balansen mellan kultur och nöje."},
+      info:{en:"Great base for a first visit",sv:"Perfekt bas för ett första besök"} },
+    { tag:{en:"Nightlife",sv:"Nattliv"}, map:true,
+      title:{en:"District VII · Jewish Quarter",sv:"Distrikt VII · Judiska kvarteret"},
+      text:{en:"Erzsébetváros — the buzzing heart of the ruin-bar scene. Step out the door and you're surrounded by bars and restaurants. Just check recent reviews so your place isn't right above a loud bar.",
+            sv:"Erzsébetváros — det pulserande hjärtat av ruinbar-scenen. Kliv ut genom dörren och du är omgiven av barer och restauranger. Kolla bara senaste recensionerna så att boendet inte ligger precis ovanför en högljudd bar."},
+      info:{en:"Lively day & night",sv:"Livligt dag som natt"} },
+    { tag:{en:"Upscale",sv:"Exklusivt"}, map:true,
+      title:{en:"District V · Belváros",sv:"Distrikt V · Belváros"},
+      text:{en:"The polished downtown by the river and Parliament. Cleaner and more upmarket, a touch pricier and slightly further from the trendy spots — lovely if you want calm and elegance.",
+            sv:"Den eleganta innerstaden vid floden och parlamentet. Renare och mer påkostat, en aning dyrare och lite längre från de trendiga ställena — härligt om ni vill ha lugn och elegans."},
+      info:{en:"Riverside & central",sv:"Vid floden & centralt"} }
   ],
 
   sights: [
-    { tag:"Icon", title:"Hungarian Parliament", text:"The neo-Gothic symbol of the Danube bank, inspired by Westminster. Stunning from the outside — the best view is from the Buda side at sunset, or from the water. Book a guided interior tour online in advance.",
-      info:"Best photo: from the opposite (Buda) riverbank", img:F+"Parliament%20Building%20Budapest%20Hungary.jpg"+W, map:true },
-    { tag:"Castle Hill", title:"Buda Castle & the Funicular", text:"Take the vintage 1870 Castle Hill Funicular (Sikló) up from Clark Ádám Square by the Chain Bridge for gorgeous views as you climb. Up top, wander the palace courtyards and the Savoyai Terrace overlooking the Danube.",
-      info:"Funicular up, stroll the grounds (museums optional)", img:F+"The%20Former%20Royal%20Palace%20on%20the%20Buda%20bankside.JPG"+W, map:true },
-    { tag:"Panorama", title:"Fisherman's Bastion & Matthias Church", text:"Neo-Romanesque terraces with fairy-tale turrets and the best panorama in the city. Right next to the colourful-roofed Matthias Church. Go early morning and you'll have it almost to yourselves.",
-      info:"Upper terraces: small fee · go at sunrise", img:F+"Fishermans%20bastion%20Budapest%20IMG%201429.JPG"+W, map:true },
-    { tag:"Church + treat", title:"St. Stephen's Basilica + Gelarto Rosa", text:"Budapest's grandest church, with a 360° view from the dome (lift or stairs, small fee). Right beside it, stop at Gelarto Rosa for artisan gelato shaped into beautiful roses — the perfect photogenic summer treat.",
-      info:"Dome view + rose-shaped ice cream next door", img:F+"HUN-2015-Budapest-St.%20Stephen%27s%20Basilica.jpg"+W, map:true, link:"https://gelartorosa.com/en/" },
-    { tag:"Reopened 2026", title:"Citadella & Gellért Hill", text:"You picked the perfect year — the Citadella reopened in March 2026 after a decade of renovation. Now a green hilltop park with new viewing terraces, a café and the 'Bastion of Freedom' exhibition. Breathtaking 360° views; easy to combine with the Buda Castle side.",
-      info:"Best all-round panorama of the city", img:F+"Budapest%20Gell%C3%A9rtberg%201.JPG"+W, map:true },
-    { tag:"Walk it", title:"Chain Bridge (Lánchíd)", text:"The iconic 19th-century bridge linking Buda and Pest, guarded by stone lions. Beautiful to walk across by day and magical lit up at night — your gateway between the two sides of the city.",
-      info:"Stunning after dark", img:F+"Sz%C3%A9chenyi%20Chain%20Bridge%20in%20Budapest%20at%20night.jpg"+W, map:true }
+    { tag:{en:"Icon",sv:"Ikon"}, map:true, img:F+"Parliament%20Building%20Budapest%20Hungary.jpg"+W,
+      title:{en:"Hungarian Parliament",sv:"Ungerska parlamentet"},
+      text:{en:"The neo-Gothic symbol of the Danube bank, inspired by Westminster. Stunning from the outside — the best view is from the Buda side at sunset, or from the water. Book a guided interior tour online in advance.",
+            sv:"Donaustrandens nygotiska symbol, inspirerad av Westminster. Magnifik utifrån — bästa vyn är från Buda-sidan i solnedgången, eller från vattnet. Boka en guidad tur inomhus online i förväg."},
+      info:{en:"Best photo: from the opposite (Buda) riverbank",sv:"Bästa fotot: från motsatta (Buda) flodstranden"} },
+    { tag:{en:"Castle Hill",sv:"Slottsberget"}, map:true, img:F+"The%20Former%20Royal%20Palace%20on%20the%20Buda%20bankside.JPG"+W,
+      title:{en:"Buda Castle & the Funicular",sv:"Budaborgen & bergbanan"},
+      text:{en:"Take the vintage 1870 Castle Hill Funicular (Sikló) up from Clark Ádám Square by the Chain Bridge for gorgeous views as you climb. Up top, wander the palace courtyards and the Savoyai Terrace overlooking the Danube.",
+            sv:"Ta den klassiska bergbanan (Sikló) från 1870 upp från Clark Ádám-torget vid Kedjebron för härliga vyer på vägen upp. Uppe vandrar ni i slottets borggårdar och på Savoyai-terrassen med utsikt över Donau."},
+      info:{en:"Funicular up, stroll the grounds (museums optional)",sv:"Bergbanan upp, strosa på området (museer valfritt)"} },
+    { tag:{en:"Panorama",sv:"Panorama"}, map:true, img:F+"Fishermans%20bastion%20Budapest%20IMG%201429.JPG"+W,
+      title:{en:"Fisherman's Bastion & Matthias Church",sv:"Fiskarbastionen & Matiaskyrkan"},
+      text:{en:"Neo-Romanesque terraces with fairy-tale turrets and the best panorama in the city. Right next to the colourful-roofed Matthias Church. Go early morning and you'll have it almost to yourselves.",
+            sv:"Nyromanska terrasser med sagolika torn och stadens bästa panorama. Precis bredvid den färgglada Matiaskyrkan. Gå tidigt på morgonen så har ni den nästan för er själva."},
+      info:{en:"Upper terraces: small fee · go at sunrise",sv:"Övre terrasserna: liten avgift · gå vid soluppgång"} },
+    { tag:{en:"Church + treat",sv:"Kyrka + godis"}, map:true, link:"https://gelartorosa.com/en/", img:F+"HUN-2015-Budapest-St.%20Stephen%27s%20Basilica.jpg"+W,
+      title:{en:"St. Stephen's Basilica + Gelarto Rosa",sv:"Sankt Stefansbasilikan + Gelarto Rosa"},
+      text:{en:"Budapest's grandest church, with a 360° view from the dome (lift or stairs, small fee). Right beside it, stop at Gelarto Rosa for artisan gelato shaped into beautiful roses — the perfect photogenic summer treat.",
+            sv:"Budapests pampigaste kyrka, med 360°-utsikt från kupolen (hiss eller trappa, liten avgift). Precis bredvid: stanna till på Gelarto Rosa för hantverksgelato format som vackra rosor — den perfekta fotogeniska sommargodbiten."},
+      info:{en:"Dome view + rose-shaped ice cream next door",sv:"Kupolutsikt + rosformad glass bredvid"} },
+    { tag:{en:"Reopened 2026",sv:"Nyöppnat 2026"}, map:true, img:F+"Budapest%20Gell%C3%A9rtberg%201.JPG"+W,
+      title:{en:"Citadella & Gellért Hill",sv:"Citadellet & Gellértberget"},
+      text:{en:"You picked the perfect year — the Citadella reopened in March 2026 after a decade of renovation. Now a green hilltop park with new viewing terraces, a café and the 'Bastion of Freedom' exhibition. Breathtaking 360° views; easy to combine with the Buda Castle side.",
+            sv:"Ni valde rätt år — Citadellet återöppnade i mars 2026 efter ett decennium av renovering. Nu en grön kulle-park med nya utsiktsterrasser, ett café och utställningen 'Frihetens bastion'. Hänförande 360°-vyer; lätt att kombinera med Buda-sidan."},
+      info:{en:"Best all-round panorama of the city",sv:"Stadens bästa allroundpanorama"} },
+    { tag:{en:"Walk it",sv:"Promenera"}, map:true, img:F+"Sz%C3%A9chenyi%20Chain%20Bridge%20in%20Budapest%20at%20night.jpg"+W,
+      title:{en:"Chain Bridge (Lánchíd)",sv:"Kedjebron (Lánchíd)"},
+      text:{en:"The iconic 19th-century bridge linking Buda and Pest, guarded by stone lions. Beautiful to walk across by day and magical lit up at night — your gateway between the two sides of the city.",
+            sv:"Den ikoniska 1800-talsbron som binder samman Buda och Pest, vaktad av stenlejon. Vacker att gå över på dagen och magisk upplyst på natten — er port mellan stadens två sidor."},
+      info:{en:"Stunning after dark",sv:"Fantastisk efter mörkrets inbrott"} }
   ],
 
   nature: [
-    { tag:"Must-do", title:"Széchenyi Thermal Baths", text:"A massive, gorgeous neo-Baroque palace with steaming outdoor thermal pools — the quintessential Budapest experience. Go early in the morning to beat the summer crowds.",
-      info:"Bring flip-flops & a swim cap for lap pools", img:F+"Szechenyi%20Baths%20and%20Pool%20Budapest%208.JPG"+W, map:true },
-    { tag:"Fairy-tale", title:"City Park & Vajdahunyad Castle", text:"Right next to the Széchenyi Baths. A storybook castle on a lake mixing Romanesque, Gothic, Renaissance and Baroque styles. In July you can rent a rowboat on the lake right in front — very photogenic for a group.",
-      info:"Combine with your bath visit", img:F+"Budapest%20Burg%20Vajdahunyad.JPG"+W, map:true },
-    { tag:"Green oasis", title:"Margaret Island", text:"A lush, car-free island in the middle of the Danube and the locals' favourite summer hangout. Rent a 'Bringóhintó' (canopy pedal-cart for the group), see the musical fountain, the Rose and Japanese Gardens, and grab a fröccs (wine spritzer) at a pop-up bar.",
-      info:"2.5 km loop — rent a pedal-cart together", img:F+"Rose%20Garden%20%28S%29.%20-%20Margaret%20Island%2C%20Budapest%2C%20Hungary.JPG"+W, map:true },
-    { tag:"Half-day escape", title:"The Buda Hills circuit", text:"If you fancy nature: ride the vintage red Cogwheel Railway up, switch to the Children's Railway (a real forest train run almost entirely by schoolkids!), hike to the Erzsébet Lookout Tower, then float back down on the open-air Libegő chairlift over the treetops.",
-      info:"Note: the lookout tower's inner stairs are temporarily closed (frost damage) but the views around it & the chairlift are open", img:F+"Children%27s%20Railway%2C%20Szechenyi%20Hill%20terminus.%20Main%20building.%20-%20Budapest%27s%2012th%20district%2C%20Hegyh%C3%A1t%20Way.JPG"+W, map:true }
+    { tag:{en:"Must-do",sv:"Måste"}, map:true, img:F+"Szechenyi%20Baths%20and%20Pool%20Budapest%208.JPG"+W,
+      title:{en:"Széchenyi Thermal Baths",sv:"Széchenyi-badet"},
+      text:{en:"A massive, gorgeous neo-Baroque palace with steaming outdoor thermal pools — the quintessential Budapest experience. Go early in the morning to beat the summer crowds.",
+            sv:"Ett enormt, praktfullt nybarockt palats med ångande utomhusbassänger — den ultimata Budapest-upplevelsen. Gå tidigt på morgonen för att slippa sommarträngseln."},
+      info:{en:"Bring flip-flops & a swim cap for lap pools",sv:"Ta med badtofflor & badmössa för motionsbassängerna"} },
+    { tag:{en:"Fairy-tale",sv:"Sagolikt"}, map:true, img:F+"Budapest%20Burg%20Vajdahunyad.JPG"+W,
+      title:{en:"City Park & Vajdahunyad Castle",sv:"Stadsparken & Vajdahunyad-slottet"},
+      text:{en:"Right next to the Széchenyi Baths. A storybook castle on a lake mixing Romanesque, Gothic, Renaissance and Baroque styles. In July you can rent a rowboat on the lake right in front — very photogenic for a group.",
+            sv:"Precis bredvid Széchenyi-badet. Ett sagoslott vid en sjö som blandar romansk, gotisk, renässans- och barockstil. I juli kan ni hyra en roddbåt på sjön framför — väldigt fotogeniskt för ett gäng."},
+      info:{en:"Combine with your bath visit",sv:"Kombinera med badbesöket"} },
+    { tag:{en:"Green oasis",sv:"Grön oas"}, map:true, img:F+"Rose%20Garden%20%28S%29.%20-%20Margaret%20Island%2C%20Budapest%2C%20Hungary.JPG"+W,
+      title:{en:"Margaret Island",sv:"Margaretaön"},
+      text:{en:"A lush, car-free island in the middle of the Danube and the locals' favourite summer hangout. Rent a 'Bringóhintó' (canopy pedal-cart for the group), see the musical fountain, the Rose and Japanese Gardens, and grab a fröccs (wine spritzer) at a pop-up bar.",
+            sv:"En frodig, bilfri ö mitt i Donau och lokalbefolkningens favoritställe på sommaren. Hyr en 'Bringóhintó' (trampbil med tak för gänget), se den musikaliska fontänen, ros- och japanträdgården, och ta en fröccs (vinspritzer) i en pop-up-bar."},
+      info:{en:"2.5 km loop — rent a pedal-cart together",sv:"2,5 km runt — hyr en trampbil tillsammans"} },
+    { tag:{en:"Half-day escape",sv:"Halvdagsutflykt"}, map:true, img:F+"Children%27s%20Railway%2C%20Szechenyi%20Hill%20terminus.%20Main%20building.%20-%20Budapest%27s%2012th%20district%2C%20Hegyh%C3%A1t%20Way.JPG"+W,
+      title:{en:"The Buda Hills circuit",sv:"Buda-bergen runt"},
+      text:{en:"If you fancy nature: ride the vintage red Cogwheel Railway up, switch to the Children's Railway (a real forest train run almost entirely by schoolkids!), hike to the Erzsébet Lookout Tower, then float back down on the open-air Libegő chairlift over the treetops.",
+            sv:"Om ni vill ha natur: åk den klassiska röda kuggbanan upp, byt till Barnjärnvägen (ett riktigt skogståg som nästan helt drivs av skolbarn!), vandra till Erzsébet-utsiktstornet, och sväva sedan ner med den öppna Libegő-stolsliften över trädtopparna."},
+      info:{en:"Note: the lookout tower's inner stairs are temporarily closed (frost damage) but the views around it & the chairlift are open",
+            sv:"Obs: utsiktstornets inre trappor är tillfälligt stängda (frostskador) men vyerna runt det & stolsliften är öppna"} }
   ],
 
   food: [
-    { tag:"Brunch", title:"Cirkusz", text:"Amazing brunch in the Jewish Quarter. No reservations, so expect a queue — but it moves fast and it's worth it.", info:"Get there a bit early", map:true },
-    { tag:"Brunch", title:"Béchamel", text:"Another fantastic brunch spot, near the Basilica. Great if Cirkusz has a long line.", info:"Near St. Stephen's", map:true },
-    { tag:"Hungarian", title:"Gettó Gulyás", text:"Authentic Hungarian food — goulash, chicken paprikash — that's trendy and tasty without the tourist-trap prices. In the Jewish Quarter.", info:"Book ahead in summer", map:true },
-    { tag:"Aesthetic", title:"Twentysix (26)", text:"A stunning indoor 'botanical garden' restaurant — lush greenery everywhere, gorgeous Mediterranean food. Perfect for a girls' group. Book well in advance.", info:"Reserve early!", map:true },
-    { tag:"Atmosphere", title:"Mazel Tov", text:"A gorgeous, upscale ruin-bar-style restaurant serving Middle Eastern food under a canopy of plants and string lights. Popular with tourists, but the food and vibe fully justify it.", info:"Reservation recommended", map:true },
-    { tag:"Lively", title:"Dobrumba", text:"Fantastic Middle Eastern / Mediterranean small plates with a buzzy, fun atmosphere. A local favourite.", info:"Great for sharing", map:true },
-    { tag:"Quick bite", title:"Bamba Marha Burger Bar", text:"Need a fast, delicious meal between sights? This beloved local burger chain does excellent craft burgers (100% beef, fresh buns, homemade sauces) plus solid veggie options. Several handy locations near the main sights.", info:"Casual & quick", map:true },
-    { tag:"Heads-up", title:"New York Café — look, don't dine", text:"Famously beautiful but wildly overpriced and a total tourist trap. Pop in for the photos or one (pricey) coffee if you must, but skip the meal.", info:"Photo stop only", map:true }
+    { tag:{en:"Brunch",sv:"Brunch"}, map:true, title:{en:"Cirkusz",sv:"Cirkusz"},
+      text:{en:"Amazing brunch in the Jewish Quarter. No reservations, so expect a queue — but it moves fast and it's worth it.",
+            sv:"Fantastisk brunch i Judiska kvarteret. Inga bokningar, så räkna med kö — men den går fort och det är värt det."},
+      info:{en:"Get there a bit early",sv:"Var där lite tidigt"} },
+    { tag:{en:"Brunch",sv:"Brunch"}, map:true, title:{en:"Béchamel",sv:"Béchamel"},
+      text:{en:"Another fantastic brunch spot, near the Basilica. Great if Cirkusz has a long line.",
+            sv:"Ett annat toppenställe för brunch, nära Basilikan. Bra om Cirkusz har lång kö."},
+      info:{en:"Near St. Stephen's",sv:"Nära Sankt Stefan"} },
+    { tag:{en:"Hungarian",sv:"Ungerskt"}, map:true, title:{en:"Gettó Gulyás",sv:"Gettó Gulyás"},
+      text:{en:"Authentic Hungarian food — goulash, chicken paprikash — that's trendy and tasty without the tourist-trap prices. In the Jewish Quarter.",
+            sv:"Autentisk ungersk mat — gulasch, kycklingpaprikash — trendigt och gott utan turistfälle-priser. I Judiska kvarteret."},
+      info:{en:"Book ahead in summer",sv:"Boka i förväg på sommaren"} },
+    { tag:{en:"Aesthetic",sv:"Estetiskt"}, map:true, title:{en:"Twentysix (26)",sv:"Twentysix (26)"},
+      text:{en:"A stunning indoor 'botanical garden' restaurant — lush greenery everywhere, gorgeous Mediterranean food. Perfect for a girls' group. Book well in advance.",
+            sv:"En fantastisk inomhus-'botanisk trädgård' — grönska överallt och underbar medelhavsmat. Perfekt för ett tjejgäng. Boka i god tid."},
+      info:{en:"Reserve early!",sv:"Boka tidigt!"} },
+    { tag:{en:"Atmosphere",sv:"Stämning"}, map:true, title:{en:"Mazel Tov",sv:"Mazel Tov"},
+      text:{en:"A gorgeous, upscale ruin-bar-style restaurant serving Middle Eastern food under a canopy of plants and string lights. Popular with tourists, but the food and vibe fully justify it.",
+            sv:"En vacker, lite exklusiv restaurang i ruinbar-stil med mellanösternmat under ett tak av växter och ljusslingor. Populär bland turister, men maten och stämningen är värd det."},
+      info:{en:"Reservation recommended",sv:"Bokning rekommenderas"} },
+    { tag:{en:"Lively",sv:"Livligt"}, map:true, title:{en:"Dobrumba",sv:"Dobrumba"},
+      text:{en:"Fantastic Middle Eastern / Mediterranean small plates with a buzzy, fun atmosphere. A local favourite.",
+            sv:"Fantastiska små rätter från Mellanöstern/Medelhavet med en härlig, sprudlande stämning. En lokal favorit."},
+      info:{en:"Great for sharing",sv:"Bra att dela på"} },
+    { tag:{en:"Quick bite",sv:"Snabbt"}, map:true, title:{en:"Bamba Marha Burger Bar",sv:"Bamba Marha Burger Bar"},
+      text:{en:"Need a fast, delicious meal between sights? This beloved local burger chain does excellent craft burgers (100% beef, fresh buns, homemade sauces) plus solid veggie options. Several handy locations near the main sights.",
+            sv:"Behöver ni en snabb, god måltid mellan sevärdheterna? Den här älskade lokala burgarkedjan gör utmärkta hantverksburgare (100% nötkött, färska bröd, hemgjorda såser) plus bra vegetariska alternativ. Flera smidiga lägen nära sevärdheterna."},
+      info:{en:"Casual & quick",sv:"Ledigt & snabbt"} },
+    { tag:{en:"Heads-up",sv:"Obs"}, map:true, title:{en:"New York Café — look, don't dine",sv:"New York Café — titta, ät inte"},
+      text:{en:"Famously beautiful but wildly overpriced and a total tourist trap. Pop in for the photos or one (pricey) coffee if you must, but skip the meal.",
+            sv:"Berömt vackert men vansinnigt överprissatt och en ren turistfälla. Kika in för fotona eller en (dyr) kaffe om ni måste, men hoppa över maten."},
+      info:{en:"Photo stop only",sv:"Bara ett fotostopp"} }
   ],
 
   night: [
-    { tag:"Original", title:"Szimpla Kert", text:"The first and most famous ruin bar — an eclectic, chaotic, wonderful maze of mismatched furniture, plants and art in a crumbling old building. Go late afternoon / early evening for a drink to skip the late-night queues.",
-      info:"Jewish Quarter, District VII", img:F+"A%20Bar%20in%20Szimpla%20Kert.jpg"+W, map:true },
-    { tag:"Rooftop", title:"High Note SkyBar", text:"A fabulous rooftop bar right beside St. Stephen's Basilica — great cocktails and an unbeatable, almost touch-the-dome view. Lovely at sunset.", info:"Smart-casual · book a table", map:true },
-    { tag:"Cocktails", title:"Boutiq'Bar", text:"One of the city's top cocktail bars if you want a proper mixology experience with expert bartenders.", info:"Intimate — reserve ahead", map:true },
-    { tag:"Views", title:"Budapest Eye", text:"A giant Ferris wheel on Erzsébet Square, a 2-minute walk from the Basilica. Sweeping views over the Pest rooftops to the Buda hills — especially magical at sunset or after dark. Grab a chimney cake (kürtőskalács) nearby.",
-      info:"Best at golden hour", img:F+"Budapest%2C%20V.%20Erzs%C3%A9bet%20t%C3%A9r%2C%20Budapest%20Sziget%20Eye.JPG"+W, map:true },
-    { tag:"Magical", title:"Evening Danube cruise", text:"Highly recommended. The Parliament, bridges and Buda Castle glowing from the water are unforgettable. Easy to book a 1-hour prosecco cruise online.", info:"Go after sunset", map:false }
+    { tag:{en:"Original",sv:"Originalet"}, map:true, img:F+"A%20Bar%20in%20Szimpla%20Kert.jpg"+W,
+      title:{en:"Szimpla Kert",sv:"Szimpla Kert"},
+      text:{en:"The first and most famous ruin bar — an eclectic, chaotic, wonderful maze of mismatched furniture, plants and art in a crumbling old building. Go late afternoon / early evening for a drink to skip the late-night queues.",
+            sv:"Den första och mest berömda ruinbaren — en eklektisk, kaotisk, underbar labyrint av omaka möbler, växter och konst i en fallfärdig gammal byggnad. Gå sen eftermiddag/tidig kväll för en drink och slipp kvällsköerna."},
+      info:{en:"Jewish Quarter, District VII",sv:"Judiska kvarteret, distrikt VII"} },
+    { tag:{en:"Rooftop",sv:"Takbar"}, map:true, title:{en:"High Note SkyBar",sv:"High Note SkyBar"},
+      text:{en:"A fabulous rooftop bar right beside St. Stephen's Basilica — great cocktails and an unbeatable, almost touch-the-dome view. Lovely at sunset.",
+            sv:"En härlig takbar precis bredvid Sankt Stefansbasilikan — goda cocktails och en oslagbar, nästan-röra-kupolen-vy. Ljuvlig i solnedgången."},
+      info:{en:"Smart-casual · book a table",sv:"Smart-ledigt · boka bord"} },
+    { tag:{en:"Cocktails",sv:"Cocktails"}, map:true, title:{en:"Boutiq'Bar",sv:"Boutiq'Bar"},
+      text:{en:"One of the city's top cocktail bars if you want a proper mixology experience with expert bartenders.",
+            sv:"En av stadens bästa cocktailbarer om ni vill ha en riktig mixologi-upplevelse med skickliga bartenders."},
+      info:{en:"Intimate — reserve ahead",sv:"Litet ställe — boka i förväg"} },
+    { tag:{en:"Views",sv:"Utsikt"}, map:true, img:F+"Budapest%2C%20V.%20Erzs%C3%A9bet%20t%C3%A9r%2C%20Budapest%20Sziget%20Eye.JPG"+W,
+      title:{en:"Budapest Eye",sv:"Budapest Eye"},
+      text:{en:"A giant Ferris wheel on Erzsébet Square, a 2-minute walk from the Basilica. Sweeping views over the Pest rooftops to the Buda hills — especially magical at sunset or after dark. Grab a chimney cake (kürtőskalács) nearby.",
+            sv:"Ett stort pariserhjul på Erzsébet-torget, 2 minuters promenad från Basilikan. Vidsträckta vyer över Pests tak till Buda-bergen — extra magiskt i solnedgången eller efter mörkret. Ta en kürtőskalács (chimney cake) i närheten."},
+      info:{en:"Best at golden hour",sv:"Bäst i gyllene timmen"} },
+    { tag:{en:"Magical",sv:"Magiskt"}, map:false, title:{en:"Evening Danube cruise",sv:"Kvällskryssning på Donau"},
+      text:{en:"Highly recommended. The Parliament, bridges and Buda Castle glowing from the water are unforgettable. Easy to book a 1-hour prosecco cruise online.",
+            sv:"Varmt rekommenderat. Parlamentet, broarna och Budaborgen som lyser från vattnet är oförglömligt. Lätt att boka en 1-timmes prosecco-kryssning online."},
+      info:{en:"Go after sunset",sv:"Åk efter solnedgången"} }
   ],
 
   info: [
-    { tag:"Taxis", title:"Use the Bolt app", text:"Never hail a cab off the street — you'll get overcharged. Download the Bolt app to order official, metered rides easily and cheaply.", info:"Bolt = the local Uber" },
-    { tag:"Transport", title:"BudapestGO app & the 4/6 tram", text:"Public transport (BKK) is excellent. Buy digital 24/72h passes in the BudapestGO app. The 4/6 tram runs 24/7 and is super safe; the no.2 tram along the Danube is a sight in itself.", info:"Validate / activate before boarding" },
-    { tag:"Money", title:"Forint & cards", text:"Currency is the Hungarian forint (HUF). Cards work almost everywhere, but carry a little cash for markets and small spots. Never change money on the street.", info:"Tap-to-pay is widely accepted" },
-    { tag:"Tipping", title:"Tips & service charge", text:"10–15% is standard. But always check the bill first — many modern places already add a 12.5% service charge, so you don't double-tip.", info:"Check before you add a tip" },
-    { tag:"Airport", title:"Airport → city", text:"The 100E airport bus runs straight to the centre (Deák tér) — it needs a separate ticket. For a taxi, use Bolt or the official Főtaxi rank.", info:"100E bus = fast & cheap" },
-    { tag:"Good to know", title:"Handy basics", text:"Tap water is safe to drink. Most people in the centre speak English. July is hot — pack sunscreen and a refillable bottle.", info:"Emergency (police/ambulance/fire): 112" }
+    { tag:{en:"Taxis",sv:"Taxi"}, title:{en:"Use the Bolt app",sv:"Använd Bolt-appen"},
+      text:{en:"Never hail a cab off the street — you'll get overcharged. Download the Bolt app to order official, metered rides easily and cheaply.",
+            sv:"Vinka aldrig in en taxi på gatan — ni blir överdebiterade. Ladda ner Bolt-appen för att enkelt och billigt beställa officiella taxibilar med taxameter."},
+      info:{en:"Bolt = the local Uber",sv:"Bolt = den lokala Ubern"} },
+    { tag:{en:"Transport",sv:"Resa"}, title:{en:"BudapestGO app & the 4/6 tram",sv:"BudapestGO-appen & spårvagn 4/6"},
+      text:{en:"Public transport (BKK) is excellent. Buy digital 24/72h passes in the BudapestGO app. The 4/6 tram runs 24/7 and is super safe; the no.2 tram along the Danube is a sight in itself.",
+            sv:"Kollektivtrafiken (BKK) är utmärkt. Köp digitala 24/72h-biljetter i BudapestGO-appen. Spårvagn 4/6 går dygnet runt och är supertrygg; spårvagn 2 längs Donau är en sevärdhet i sig."},
+      info:{en:"Validate / activate before boarding",sv:"Validera/aktivera innan du går ombord"} },
+    { tag:{en:"Money",sv:"Pengar"}, title:{en:"Forint & cards",sv:"Forint & kort"},
+      text:{en:"Currency is the Hungarian forint (HUF). Cards work almost everywhere, but carry a little cash for markets and small spots. Never change money on the street.",
+            sv:"Valutan är ungerska forint (HUF). Kort funkar nästan överallt, men ha lite kontanter för marknader och små ställen. Växla aldrig pengar på gatan."},
+      info:{en:"Tap-to-pay is widely accepted",sv:"Kontaktlös betalning fungerar brett"} },
+    { tag:{en:"Tipping",sv:"Dricks"}, title:{en:"Tips & service charge",sv:"Dricks & serviceavgift"},
+      text:{en:"10–15% is standard. But always check the bill first — many modern places already add a 12.5% service charge, so you don't double-tip.",
+            sv:"10–15% är standard. Men kolla alltid notan först — många moderna ställen lägger redan på 12,5% serviceavgift, så att ni inte ger dubbel dricks."},
+      info:{en:"Check before you add a tip",sv:"Kolla innan du lägger på dricks"} },
+    { tag:{en:"Airport",sv:"Flygplats"}, title:{en:"Airport → city",sv:"Flygplats → stan"},
+      text:{en:"The 100E airport bus runs straight to the centre (Deák tér) — it needs a separate ticket. For a taxi, use Bolt or the official Főtaxi rank.",
+            sv:"Flygbussen 100E går rakt in till centrum (Deák tér) — den kräver en separat biljett. För taxi, använd Bolt eller den officiella Főtaxi-stationen."},
+      info:{en:"100E bus = fast & cheap",sv:"Buss 100E = snabbt & billigt"} },
+    { tag:{en:"Good to know",sv:"Bra att veta"}, title:{en:"Handy basics",sv:"Praktiska grunder"},
+      text:{en:"Tap water is safe to drink. Most people in the centre speak English. July is hot — pack sunscreen and a refillable bottle.",
+            sv:"Kranvattnet är drickbart. De flesta i centrum talar engelska. Juli är varmt — packa solkräm och en återfyllbar flaska."},
+      info:{en:"Emergency (police/ambulance/fire): 112",sv:"Nödnummer (polis/ambulans/brand): 112"} }
   ]
 };
 
-// 3-day itinerary (kulcs: 'days')
+// 3-day itinerary
 const NAPOK = [
-  { title:"Day 1 · Pest classics", sub:"Sun 5 July · arrival & downtown",
-    items:[
-      "Settle into your <b>District VI / VII</b> base, then stroll <b>Andrássy Avenue</b>",
-      "<b>St. Stephen's Basilica</b> + dome view, gelato at <b>Gelarto Rosa</b>",
-      "Sunset on the <b>Budapest Eye</b>, drinks at <b>High Note SkyBar</b>",
-      "Dinner at <b>Twentysix</b> or <b>Mazel Tov</b>, nightcap at <b>Szimpla Kert</b>"
-    ]},
-  { title:"Day 2 · Buda & the river", sub:"Mon 6 July · castle, hill & cruise",
-    items:[
-      "Walk the <b>Chain Bridge</b>, ride the <b>Funicular</b> up to <b>Buda Castle</b>",
-      "<b>Fisherman's Bastion</b> & <b>Matthias Church</b> (go earlyish)",
-      "Over to <b>Citadella / Gellért Hill</b> for the big panorama",
-      "Brunch/lunch at <b>Cirkusz</b> or <b>Béchamel</b>, burgers at <b>Bamba Marha</b> if hungry",
-      "Evening <b>Danube cruise</b> to see the city lit up"
-    ]},
-  { title:"Day 3 · Baths & green", sub:"Tue 7 July · relax day (+ depart 8th)",
-    items:[
-      "Morning at the <b>Széchenyi Baths</b> (arrive early)",
-      "Next door: <b>Vajdahunyad Castle</b> & a rowboat in <b>City Park</b>",
-      "Optional: half-day <b>Buda Hills</b> circuit (cogwheel → kids' railway → Libegő)",
-      "Wind down on <b>Margaret Island</b> with a fröccs",
-      "Farewell dinner at <b>Gettó Gulyás</b> or <b>Dobrumba</b>"
-    ]}
+  { title:{en:"Day 1 · Pest classics",sv:"Dag 1 · Pest-klassiker"},
+    sub:{en:"Sun 5 July · arrival & downtown",sv:"Sön 5 juli · ankomst & innerstad"},
+    items:{
+      en:["Settle into your <b>District VI/VII</b> base, then stroll <b>Andrássy Avenue</b>",
+          "<b>St. Stephen's Basilica</b> + dome view, gelato at <b>Gelarto Rosa</b>",
+          "Sunset on the <b>Budapest Eye</b>, drinks at <b>High Note SkyBar</b>",
+          "Dinner at <b>Twentysix</b> or <b>Mazel Tov</b>, nightcap at <b>Szimpla Kert</b>"],
+      sv:["Checka in på boendet i <b>distrikt VI/VII</b>, strosa sedan längs <b>Andrássy-avenyn</b>",
+          "<b>Sankt Stefansbasilikan</b> + kupolvy, gelato på <b>Gelarto Rosa</b>",
+          "Solnedgång på <b>Budapest Eye</b>, drinkar på <b>High Note SkyBar</b>",
+          "Middag på <b>Twentysix</b> eller <b>Mazel Tov</b>, sängfösare på <b>Szimpla Kert</b>"]
+    }},
+  { title:{en:"Day 2 · Buda & the river",sv:"Dag 2 · Buda & floden"},
+    sub:{en:"Mon 6 July · castle, hill & cruise",sv:"Mån 6 juli · borg, berg & kryssning"},
+    items:{
+      en:["Walk the <b>Chain Bridge</b>, ride the <b>Funicular</b> up to <b>Buda Castle</b>",
+          "<b>Fisherman's Bastion</b> & <b>Matthias Church</b> (go earlyish)",
+          "Over to <b>Citadella / Gellért Hill</b> for the big panorama",
+          "Brunch/lunch at <b>Cirkusz</b> or <b>Béchamel</b>, burgers at <b>Bamba Marha</b> if hungry",
+          "Evening <b>Danube cruise</b> to see the city lit up"],
+      sv:["Gå över <b>Kedjebron</b>, åk <b>bergbanan</b> upp till <b>Budaborgen</b>",
+          "<b>Fiskarbastionen</b> & <b>Matiaskyrkan</b> (gå ganska tidigt)",
+          "Vidare till <b>Citadellet / Gellértberget</b> för det stora panoramat",
+          "Brunch/lunch på <b>Cirkusz</b> eller <b>Béchamel</b>, burgare på <b>Bamba Marha</b> om ni är hungriga",
+          "Kvällskryssning på <b>Donau</b> för att se staden upplyst"]
+    }},
+  { title:{en:"Day 3 · Baths & green",sv:"Dag 3 · Bad & grönska"},
+    sub:{en:"Tue 7 July · relax day (+ depart 8th)",sv:"Tis 7 juli · avkopplingsdag (+ avresa 8:e)"},
+    items:{
+      en:["Morning at the <b>Széchenyi Baths</b> (arrive early)",
+          "Next door: <b>Vajdahunyad Castle</b> & a rowboat in <b>City Park</b>",
+          "Optional: half-day <b>Buda Hills</b> circuit (cogwheel → kids' railway → Libegő)",
+          "Wind down on <b>Margaret Island</b> with a fröccs",
+          "Farewell dinner at <b>Gettó Gulyás</b> or <b>Dobrumba</b>"],
+      sv:["Förmiddag på <b>Széchenyi-badet</b> (kom tidigt)",
+          "Bredvid: <b>Vajdahunyad-slottet</b> & en roddbåt i <b>Stadsparken</b>",
+          "Valfritt: halvdag i <b>Buda-bergen</b> (kuggbana → barnjärnväg → Libegő)",
+          "Varva ner på <b>Margaretaön</b> med en fröccs",
+          "Avskedsmiddag på <b>Gettó Gulyás</b> eller <b>Dobrumba</b>"]
+    }}
 ];
 
-// ---- Az alábbi részt NEM kell szerkeszteni: ez rajzolja ki az oldalt ----
+// ---- Az alábbi részt NEM kell szerkeszteni ----
+let LANG = localStorage.getItem('lang') || 'en';
+function t(v){ return (v && typeof v === 'object' && !Array.isArray(v)) ? (v[LANG] ?? v.en) : v; }
 function mapsLink(e){
-  const q = encodeURIComponent((e.map === true ? e.title : e.map) + " Budapest");
-  return "https://www.google.com/maps/search/?api=1&query=" + q;
+  const base = (e.map === true ? (e.title.en || t(e.title)) : e.map);
+  return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(base + " Budapest");
 }
-function render(){
+
+function renderContent(){
   for(const [kulcs, elemek] of Object.entries(TARTALOM)){
     const grid = document.getElementById('grid-'+kulcs);
     if(!grid) continue;
     grid.innerHTML = elemek.map(e=>`
       <article class="card reveal">
-        ${e.img ? `<img class="photo" loading="lazy" alt="${e.title||''}" src="${e.img}" onerror="this.style.display='none'">`:''}
+        ${e.img ? `<img class="photo" loading="lazy" alt="${t(e.title)||''}" src="${e.img}" onerror="this.style.display='none'">`:''}
         <div class="body">
-          ${e.tag ? `<span class="tag">${e.tag}</span><br>`:''}
-          <h3>${e.title||''}</h3>
-          <p>${e.text||''}</p>
-          ${e.info ? `<div class="info">› ${e.info}</div>`:''}
+          ${e.tag ? `<span class="tag">${t(e.tag)}</span><br>`:''}
+          <h3>${t(e.title)||''}</h3>
+          <p>${t(e.text)||''}</p>
+          ${e.info ? `<div class="info">› ${t(e.info)}</div>`:''}
           ${(e.map || e.link) ? `<div class="links">
             ${e.map ? `<a href="${mapsLink(e)}" target="_blank" rel="noopener">📍 Map</a>`:''}
             ${e.link ? `<a href="${e.link}" target="_blank" rel="noopener">↗ Website</a>`:''}
@@ -423,23 +566,38 @@ function render(){
         </div>
       </article>`).join('');
   }
-  // itinerary
   const days = document.getElementById('grid-days');
   if(days){
     days.innerHTML = NAPOK.map(d=>`
       <div class="day reveal">
-        <h3>${d.title}</h3>
-        <div class="sub">${d.sub}</div>
-        <ul>${d.items.map(i=>`<li>${i}</li>`).join('')}</ul>
+        <h3>${t(d.title)}</h3>
+        <div class="sub">${t(d.sub)}</div>
+        <ul>${t(d.items).map(i=>`<li>${i}</li>`).join('')}</ul>
       </div>`).join('');
   }
-  // scroll reveal
   const io = new IntersectionObserver(es=>{
     es.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target);} });
   },{threshold:.12});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 }
-render();
+
+function applyChrome(){
+  document.querySelectorAll('[data-en]').forEach(el=>{
+    el.innerHTML = el.getAttribute('data-'+LANG) ?? el.getAttribute('data-en');
+  });
+  document.documentElement.lang = LANG;
+}
+
+function setLang(l){
+  LANG = l;
+  localStorage.setItem('lang', l);
+  document.querySelectorAll('#lang button').forEach(b=>b.classList.toggle('active', b.dataset.l === l));
+  applyChrome();
+  renderContent();
+}
+
+document.querySelectorAll('#lang button').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.l)));
+setLang(LANG);
 </script>
 </body>
 </html>
