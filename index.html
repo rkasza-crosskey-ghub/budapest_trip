@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Budapest – Útikalauz</title>
+
+<!--
+==================================================================
+  HOGYAN SZERKESZD EZT AZ OLDALT? (friss infó beírása)
+==================================================================
+  1. A teljes tartalom lentebb, a <script id="data"> blokkban van,
+     jól olvasható listákban. NE a HTML-t szerkeszd, hanem azt!
+  2. Keresd meg a megfelelő szekciót (LATNIVALOK, ETTERMEK, stb.)
+  3. Egy bejegyzés így néz ki:
+        { cim: "Név", leiras: "Leírás...", info: "Pl. nyitvatartás" }
+  4. Új elem hozzáadása: másolj egy sort, írd át, tegyél elé vesszőt.
+  5. Mentés után töltsd fel újra a GitHubra -> a link frissül.
+==================================================================
+-->
+
+<style>
+  :root{
+    --ink:#1a1410;
+    --paper:#f4ece0;
+    --paper2:#ece0cf;
+    --rust:#b5451a;
+    --rust-dk:#8a3413;
+    --gold:#c9962e;
+    --green:#4a5d3a;
+    --line:#d8c7ad;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:Georgia,'Times New Roman',serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.65;
+    overflow-x:hidden;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;min-height:88vh;display:flex;align-items:flex-end;
+    background:linear-gradient(to bottom,#2a1d3d 0%,#5a2a36 45%,#8a3413 100%);
+    color:#fff;overflow:hidden;
+  }
+  .hero .sky{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+  .hero .veil{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(20,12,28,.05),rgba(20,12,28,.55));z-index:1}
+  .hero-inner{padding:0 24px 72px;max-width:1080px;margin:0 auto;width:100%;position:relative;z-index:2}
+  .kicker{
+    font-family:Georgia,serif;letter-spacing:.42em;text-transform:uppercase;
+    font-size:.72rem;color:var(--gold);margin-bottom:18px;font-weight:bold;
+  }
+  .hero h1{
+    font-size:clamp(3rem,9vw,6.4rem);line-height:.92;font-weight:normal;
+    letter-spacing:-.02em;text-shadow:0 3px 30px rgba(0,0,0,.5);
+  }
+  .hero h1 em{color:var(--gold);font-style:italic}
+  .hero p{font-size:1.15rem;max-width:520px;margin-top:22px;opacity:.92}
+  .scroll-hint{
+    position:absolute;bottom:24px;left:50%;transform:translateX(-50%);
+    font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;opacity:.7;
+    animation:bob 2s ease-in-out infinite;
+  }
+  @keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky;top:0;z-index:50;background:var(--paper);
+    border-bottom:2px solid var(--ink);
+  }
+  nav .wrap{display:flex;flex-wrap:wrap;gap:4px;align-items:center;padding:12px 24px}
+  nav .brand{font-weight:bold;letter-spacing:.1em;margin-right:auto;font-size:1.05rem}
+  nav a{
+    color:var(--ink);text-decoration:none;font-size:.82rem;
+    letter-spacing:.08em;text-transform:uppercase;padding:6px 12px;
+    border-radius:2px;transition:.2s;
+  }
+  nav a:hover{background:var(--rust);color:#fff}
+
+  /* ---------- SECTIONS ---------- */
+  section{padding:84px 0;border-bottom:1px solid var(--line)}
+  section:nth-child(even){background:var(--paper2)}
+  .sec-head{margin-bottom:48px;position:relative}
+  .sec-num{
+    font-size:5rem;color:var(--line);font-style:italic;line-height:.7;
+    display:block;margin-bottom:-8px;
+  }
+  .sec-head h2{
+    font-size:clamp(2rem,5vw,3.2rem);font-weight:normal;letter-spacing:-.01em;
+  }
+  .sec-head .lead{margin-top:14px;max-width:620px;font-size:1.08rem;opacity:.85}
+  .accent{height:3px;width:64px;background:var(--rust);margin-top:20px}
+
+  /* ---------- CARDS ---------- */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px}
+  .card{
+    background:var(--paper);border:1px solid var(--line);
+    border-radius:4px;padding:26px;transition:.25s;position:relative;
+    box-shadow:0 1px 0 rgba(0,0,0,.04);
+  }
+  section:nth-child(even) .card{background:#fff}
+  .card:hover{transform:translateY(-4px);box-shadow:0 14px 34px rgba(138,52,19,.13);border-color:var(--rust)}
+  .card h3{font-size:1.32rem;margin-bottom:8px;color:var(--rust-dk)}
+  .card p{font-size:.97rem;opacity:.88}
+  .card .info{
+    margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);
+    font-size:.82rem;letter-spacing:.03em;color:var(--green);font-style:italic;
+  }
+  .card .tag{
+    display:inline-block;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
+    background:var(--gold);color:var(--ink);padding:3px 9px;border-radius:99px;
+    margin-bottom:14px;font-family:Georgia,serif;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--ink);color:var(--paper);padding:56px 0;text-align:center}
+  footer h3{font-size:1.6rem;font-weight:normal;margin-bottom:10px}
+  footer p{opacity:.6;font-size:.85rem}
+  footer .gold{color:var(--gold)}
+
+  /* reveal animation */
+  .reveal{opacity:0;transform:translateY(24px);transition:.7s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  @media(max-width:640px){
+    nav .brand{width:100%;margin-bottom:6px}
+    section{padding:60px 0}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <svg class="sky" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <radialGradient id="moon" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#fff6d8"/><stop offset="100%" stop-color="#fff6d8" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#3a2440"/><stop offset="100%" stop-color="#241526"/>
+      </linearGradient>
+    </defs>
+    <!-- moon glow -->
+    <circle cx="1180" cy="150" r="160" fill="url(#moon)" opacity=".5"/>
+    <circle cx="1180" cy="150" r="46" fill="#fdf3cf" opacity=".9"/>
+    <!-- stars -->
+    <g fill="#ffe9b0">
+      <circle cx="220" cy="90" r="1.6"/><circle cx="400" cy="160" r="1.2"/><circle cx="640" cy="70" r="1.5"/>
+      <circle cx="860" cy="130" r="1.1"/><circle cx="980" cy="60" r="1.4"/><circle cx="320" cy="220" r="1"/>
+      <circle cx="720" cy="200" r="1.2"/><circle cx="1320" cy="240" r="1.4"/><circle cx="120" cy="180" r="1.2"/>
+    </g>
+    <!-- Buda castle hill silhouette (left) -->
+    <path d="M0,520 Q120,470 260,485 L300,470 L340,485 Q460,470 560,500 L560,800 L0,800 Z" fill="#3d2433"/>
+    <rect x="180" y="430" width="120" height="70" fill="#4a2c3c"/>
+    <rect x="205" y="400" width="18" height="32" fill="#4a2c3c"/><rect x="258" y="400" width="18" height="32" fill="#4a2c3c"/>
+    <circle cx="240" cy="392" r="22" fill="#4a2c3c"/>
+    <!-- Parliament (right of centre) -->
+    <g fill="#5a3142">
+      <rect x="820" y="430" width="320" height="170"/>
+      <!-- central dome -->
+      <rect x="950" y="330" width="60" height="100"/>
+      <path d="M950,330 Q980,250 1010,330 Z"/>
+      <rect x="975" y="210" width="10" height="48"/>
+      <!-- side spires -->
+      <path d="M845,430 L845,360 L860,335 L875,360 L875,430 Z"/>
+      <path d="M1085,430 L1085,360 L1100,335 L1115,360 L1115,430 Z"/>
+    </g>
+    <!-- windows glow -->
+    <g fill="#ffcf6e" opacity=".85">
+      <rect x="835" y="455" width="6" height="14"/><rect x="855" y="455" width="6" height="14"/>
+      <rect x="875" y="455" width="6" height="14"/><rect x="1100" y="455" width="6" height="14"/>
+      <rect x="1120" y="455" width="6" height="14"/><rect x="965" y="360" width="6" height="14"/>
+      <rect x="990" y="360" width="6" height="14"/>
+    </g>
+    <!-- water -->
+    <rect x="0" y="600" width="1440" height="200" fill="url(#water)"/>
+    <!-- chain bridge -->
+    <g stroke="#6e4150" stroke-width="4" fill="none" opacity=".9">
+      <path d="M560,600 Q700,540 840,600"/>
+      <path d="M300,600 Q430,560 560,600"/>
+      <line x1="560" y1="520" x2="560" y2="600"/>
+      <line x1="840" y1="540" x2="840" y2="600"/>
+      <line x1="300" y1="560" x2="300" y2="600"/>
+    </g>
+    <!-- reflections -->
+    <g fill="#ffcf6e" opacity=".18">
+      <rect x="950" y="610" width="60" height="120"/>
+      <rect x="835" y="610" width="6" height="90"/><rect x="1100" y="610" width="6" height="90"/>
+    </g>
+  </svg>
+  <div class="veil"></div>
+  <div class="hero-inner">
+    <div class="kicker">Útikalauz &middot; 2026</div>
+    <h1>Buda<em>pest</em></h1>
+    <p>A Duna gyöngyszeme — termálfürdők, romkocsmák, ezeréves történelem és élő esti fények. Minden, amit egy látogatáshoz tudnod kell.</p>
+  </div>
+  <div class="scroll-hint">görgess lejjebb</div>
+</header>
+
+<nav>
+  <div class="wrap">
+    <span class="brand">★ BUDAPEST</span>
+    <a href="#latnivalok">Látnivalók</a>
+    <a href="#ettermek">Gasztro</a>
+    <a href="#programok">Programok</a>
+    <a href="#info">Infók</a>
+  </div>
+</nav>
+
+<!-- A szekciók tartalmát a lenti adatból a script tölti fel automatikusan -->
+<section id="latnivalok">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">01</span>
+      <h2>Látnivalók</h2>
+      <p class="lead">A kötelező megállók — a budai Vártól a Parlament neogótikus csipkéjéig.</p>
+      <div class="accent"></div>
+    </div>
+    <div class="grid" id="grid-latnivalok"></div>
+  </div>
+</section>
+
+<section id="ettermek">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">02</span>
+      <h2>Éttermek &amp; gasztro</h2>
+      <p class="lead">Gulyástól a fine diningig — hol egyél, hogy emlékezetes maradjon.</p>
+      <div class="accent"></div>
+    </div>
+    <div class="grid" id="grid-ettermek"></div>
+  </div>
+</section>
+
+<section id="programok">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">03</span>
+      <h2>Programok &amp; éjszakai élet</h2>
+      <p class="lead">Romkocsmák, fürdőpartik és esti hajózás a kivilágított Dunán.</p>
+      <div class="accent"></div>
+    </div>
+    <div class="grid" id="grid-programok"></div>
+  </div>
+</section>
+
+<section id="info">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">04</span>
+      <h2>Gyakorlati infók</h2>
+      <p class="lead">Közlekedés, szállás, fizetés — a praktikus tudnivalók egy helyen.</p>
+      <div class="accent"></div>
+    </div>
+    <div class="grid" id="grid-info"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <h3>Jó utat Budapestre! <span class="gold">★</span></h3>
+    <p>Készült útikalauznak &middot; A friss infókat bármikor frissítheted a fájlban</p>
+  </div>
+</footer>
+
+<!--
+==================================================================
+  ★★★  EZT A RÉSZT SZERKESZD  ★★★
+  Itt van minden tartalom. Írd át, törölj, vagy adj hozzá elemeket.
+  Minden elem: { tag:"címke", cim:"Cím", leiras:"...", info:"..." }
+  A "tag" és "info" elhagyható (üres "" is lehet).
+==================================================================
+-->
+<script id="data">
+const TARTALOM = {
+
+  latnivalok: [
+    { tag:"Ikon", cim:"Országház (Parlament)", leiras:"A Duna-part neogótikus szimbóluma, a brit parlament ihlette. Esti kivilágításban a legszebb. Belső vezetett túrák foglalhatók.", info:"Tipp: jegyet előre foglalj online" },
+    { tag:"Világörökség", cim:"Budai Várnegyed", leiras:"Királyi palota, a Mátyás-templom és macskaköves utcák. A Magyar Nemzeti Galéria is itt található, páratlan panorámával Pestre.", info:"A Sikló vagy gyalogút felfelé" },
+    { tag:"Panoráma", cim:"Halászbástya", leiras:"Neoromán teraszok, mesebeli tornyok és a város egyik legjobb kilátása. Hajnalban szinte üres.", info:"Felső teraszok: kis belépő" },
+    { tag:"Templom", cim:"Szent István-bazilika", leiras:"Budapest legnagyobb temploma, kupolájából 360°-os kilátás. Pénztárca- és családbarát program.", info:"Kupola: lift vagy lépcső" },
+    { tag:"Fürdő", cim:"Széchenyi Gyógyfürdő", leiras:"Európa egyik legnagyobb gyógyfürdője a Városligetben — kültéri medencék gőzölögnek télen is.", info:"Hozz papucsot és fürdősapkát" },
+    { tag:"Zöld", cim:"Margitsziget", leiras:"2,5 km hosszú zöld oázis a Duna közepén: futópályák, japánkert, zenélő szökőkút. Tökéletes pihenőnap.", info:"Bringa- és rollerbérlés a hídnál" }
+  ],
+
+  ettermek: [
+    { tag:"Klasszikus", cim:"Gundel", leiras:"A magyar gasztronómia legendás neve a Városliget szélén — Gundel-palacsinta kötelező.", info:"Elegáns; foglalás ajánlott" },
+    { tag:"Street food", cim:"Lángos a piacon", leiras:"A Nagyvásárcsarnok emeletén tejföllel-sajttal — az igazi magyar utcai klasszikus.", info:"Készpénz gyakran gyorsabb" },
+    { tag:"Modern", cim:"Fine dining (belváros)", leiras:"Több Michelin-csillagos és bib gourmand hely a belvárosban a modern magyar konyháért.", info:"Hetekkel előre foglalj" },
+    { tag:"Helyi", cim:"Gulyás & étkezde", leiras:"Hagyományos magyar étkezdék (étkezde) bőséges, olcsó házias fogásokkal — gulyás, pörkölt, schnitzel.", info:"Ebédmenü a legjobb ár" }
+  ],
+
+  programok: [
+    { tag:"Éjszaka", cim:"Romkocsma-túra", leiras:"A Szimpla Kert és társai a régi zsidónegyedben — bontásra ítélt házakból lett bárok, egyedi hangulat.", info:"Belváros, VII. kerület" },
+    { tag:"Élmény", cim:"Esti dunai hajózás", leiras:"A kivilágított Parlament és a hidak a vízről — vacsorás vagy italos sétahajók indulnak esténként.", info:"Naplemente után a legszebb" },
+    { tag:"Buli", cim:"Fürdőparti (Sparty)", leiras:"Éjszakai fürdőbuli a Széchenyiben — zene, fények a termálvízben. Szezonális, főleg hétvégén.", info:"Jegy online, korhatáros" },
+    { tag:"Kultúra", cim:"Koncert / Opera", leiras:"A Magyar Állami Operaház és számos koncertterem — Vivalditól a komolyzenéig.", info:"Diák/last-minute jegyek" }
+  ],
+
+  info: [
+    { tag:"Közlekedés", cim:"BKK & jegyek", leiras:"Metró, villamos, busz, HÉV egy rendszerben. A BudapestGO appban vehetsz jegyet/bérletet. A 2-es villamos a Duna mentén maga is látványosság.", info:"Felszállás előtt érvényesíts" },
+    { tag:"Reptér", cim:"Repülőtér → város", leiras:"A 100E reptéri busz közvetlenül a belvárosba (Deák tér). Taxi: csak hivatalos, fixáras (Főtaxi).", info:"100E: külön jegy kell" },
+    { tag:"Fizetés", cim:"Pénz & kártya", leiras:"A pénznem a forint (HUF). Kártyát szinte mindenhol elfogadnak, de piacokon/kis helyeken jó kis készpénzt vinni.", info:"Ne válts pénzt az utcán" },
+    { tag:"Szállás", cim:"Hol szállj meg", leiras:"V–VII. kerület a legközpontibb (séta táv mindenhova). VI. kerület (Andrássy) elegáns; budai oldal csendesebb.", info:"Foglalj korán főszezonban" },
+    { tag:"Hasznos", cim:"Jó tudni", leiras:"Az ivóvíz iható a csapból. Borravaló kb. 10–12%. A legtöbb hely beszél angolul a belvárosban.", info:"Mentő/rendőr/tűz: 112" }
+  ]
+};
+
+// ---- Az alábbi részt NEM kell szerkeszteni: ez rajzolja ki a kártyákat ----
+function render(){
+  for(const [kulcs, elemek] of Object.entries(TARTALOM)){
+    const grid = document.getElementById('grid-'+kulcs);
+    if(!grid) continue;
+    grid.innerHTML = elemek.map(e=>`
+      <article class="card reveal">
+        ${e.tag ? `<span class="tag">${e.tag}</span><br>`:''}
+        <h3>${e.cim||''}</h3>
+        <p>${e.leiras||''}</p>
+        ${e.info ? `<div class="info">› ${e.info}</div>`:''}
+      </article>`).join('');
+  }
+  // scroll reveal
+  const io = new IntersectionObserver(es=>{
+    es.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target);} });
+  },{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+}
+render();
+</script>
+</body>
+</html>
