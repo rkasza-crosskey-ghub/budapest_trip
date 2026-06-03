@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Budapest — A Girls' Trip Guide · July 5–8</title>
 
+<!-- Interaktív térkép: Leaflet + OpenStreetMap (nincs API-kulcs) -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 <!--
 ==================================================================
   HOGYAN SZERKESZD EZT AZ OLDALT? (friss infó beírása)
@@ -158,6 +162,17 @@
   .day li::before{content:"›";position:absolute;left:0;color:var(--rust);font-weight:bold}
   .day li b{color:var(--ink)}
 
+  /* ---------- MAP ---------- */
+  .map-box{height:560px;width:100%;border:1px solid var(--line);border-radius:6px;box-shadow:0 1px 0 rgba(0,0,0,.04);z-index:1}
+  .leaflet-container{font-family:Georgia,serif;border-radius:6px;background:#dfe3da}
+  .legend{display:flex;flex-wrap:wrap;gap:16px 22px;margin-top:22px}
+  .legend > span{display:inline-flex;align-items:center;gap:8px;font-size:.88rem}
+  .legend i{width:14px;height:14px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px rgba(0,0,0,.3);flex:none}
+  .map-note{margin-top:12px;font-size:.85rem;font-style:italic;opacity:.75}
+  .mk-pop b{color:var(--rust-dk);font-size:1.02rem}
+  .mk-pop a{display:inline-block;margin-top:5px;color:var(--rust-dk);font-size:.82rem;text-decoration:none;border-bottom:1px dotted var(--rust)}
+  @media(max-width:640px){.map-box{height:64vh}}
+
   /* ---------- FOOTER ---------- */
   footer{background:var(--ink);color:var(--paper);padding:56px 0;text-align:center}
   footer h3{font-size:1.6rem;font-weight:normal;margin-bottom:10px}
@@ -201,6 +216,7 @@
 <nav>
   <div class="wrap">
     <span class="brand">★ BUDAPEST</span>
+    <a href="#map"    data-en="Map"           data-sv="Karta"></a>
     <a href="#stay"   data-en="Where to stay" data-sv="Boende"></a>
     <a href="#sights" data-en="Sights"        data-sv="Sevärdheter"></a>
     <a href="#nature" data-en="Baths &amp; parks" data-sv="Bad &amp; parker"></a>
@@ -214,6 +230,30 @@
     </div>
   </div>
 </nav>
+
+<section id="map">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">🗺</span>
+      <h2 data-en="Everything on one map" data-sv="Allt på en karta"></h2>
+      <p class="lead"
+         data-en="Every spot in this guide, pinned and colour-coded. Tap a pin for the name and one-tap directions."
+         data-sv="Alla ställen i guiden, utsatta och färgkodade. Tryck på en nål för namn och vägbeskrivning med ett tryck."></p>
+      <div class="accent"></div>
+    </div>
+    <div id="bpmap" class="map-box"></div>
+    <div class="legend">
+      <span><i style="background:#b5451a"></i><span data-en="Sights" data-sv="Sevärdheter"></span></span>
+      <span><i style="background:#4a5d3a"></i><span data-en="Baths &amp; parks" data-sv="Bad &amp; parker"></span></span>
+      <span><i style="background:#c9962e"></i><span data-en="Food" data-sv="Mat"></span></span>
+      <span><i style="background:#6a3d7a"></i><span data-en="Nightlife" data-sv="Nattliv"></span></span>
+      <span><i style="background:#2f6f8f"></i><span data-en="Neighbourhoods" data-sv="Stadsdelar"></span></span>
+    </div>
+    <p class="map-note"
+       data-en="Pins for smaller venues are approximate — the directions link always finds the right place by name."
+       data-sv="Nålar för mindre ställen är ungefärliga — vägbeskrivningslänken hittar alltid rätt ställe via namnet."></p>
+  </div>
+</section>
 
 <section id="stay">
   <div class="wrap">
@@ -598,6 +638,61 @@ function setLang(l){
 
 document.querySelectorAll('#lang button').forEach(b=>b.addEventListener('click',()=>setLang(b.dataset.l)));
 setLang(LANG);
+
+// ---- Nagy térkép (Leaflet + OpenStreetMap, nincs API-kulcs) ----
+// Színek: sights #b5451a · nature #4a5d3a · food #c9962e · night #6a3d7a · stay #2f6f8f
+const MAPPOINTS = [
+  // --- Sights ---
+  {name:"Hungarian Parliament",            cat:"#b5451a", lat:47.5072, lng:19.0456},
+  {name:"Buda Castle & Funicular",         cat:"#b5451a", lat:47.4960, lng:19.0398},
+  {name:"Fisherman's Bastion",             cat:"#b5451a", lat:47.5022, lng:19.0347},
+  {name:"St. Stephen's Basilica",          cat:"#b5451a", lat:47.5008, lng:19.0537},
+  {name:"Citadella / Gellért Hill",        cat:"#b5451a", lat:47.4869, lng:19.0464},
+  {name:"Chain Bridge",                    cat:"#b5451a", lat:47.4986, lng:19.0436},
+  // --- Baths, parks & nature ---
+  {name:"Széchenyi Thermal Baths",         cat:"#4a5d3a", lat:47.5188, lng:19.0822},
+  {name:"Vajdahunyad Castle (City Park)",  cat:"#4a5d3a", lat:47.5145, lng:19.0817},
+  {name:"Margaret Island",                 cat:"#4a5d3a", lat:47.5279, lng:19.0489},
+  {name:"Buda Hills (Erzsébet Lookout & Libegő)", cat:"#4a5d3a", lat:47.5183, lng:18.9557},
+  // --- Food ---
+  {name:"Cirkusz",                         cat:"#c9962e", lat:47.4970, lng:19.0593},
+  {name:"Béchamel",                        cat:"#c9962e", lat:47.5045, lng:19.0512},
+  {name:"Gettó Gulyás",                    cat:"#c9962e", lat:47.4969, lng:19.0610},
+  {name:"Twentysix (26)",                  cat:"#c9962e", lat:47.5024, lng:19.0556},
+  {name:"Mazel Tov",                       cat:"#c9962e", lat:47.4982, lng:19.0648},
+  {name:"Dobrumba",                        cat:"#c9962e", lat:47.4966, lng:19.0602},
+  {name:"Bamba Marha Burger Bar",          cat:"#c9962e", lat:47.4986, lng:19.0556},
+  {name:"New York Café",                   cat:"#c9962e", lat:47.4972, lng:19.0699},
+  // --- Nightlife ---
+  {name:"Szimpla Kert",                    cat:"#6a3d7a", lat:47.4976, lng:19.0639},
+  {name:"High Note SkyBar",                cat:"#6a3d7a", lat:47.5008, lng:19.0524},
+  {name:"Boutiq'Bar",                      cat:"#6a3d7a", lat:47.4986, lng:19.0541},
+  {name:"Budapest Eye",                    cat:"#6a3d7a", lat:47.4979, lng:19.0529},
+  {name:"Danube cruise (Vigadó tér pier)", cat:"#6a3d7a", lat:47.4958, lng:19.0489},
+  // --- Neighbourhoods (where to stay) ---
+  {name:"District VI · Terézváros",        cat:"#2f6f8f", lat:47.5055, lng:19.0650},
+  {name:"District VII · Jewish Quarter",   cat:"#2f6f8f", lat:47.4968, lng:19.0665},
+  {name:"District V · Belváros",           cat:"#2f6f8f", lat:47.4955, lng:19.0520}
+];
+
+(function initMap(){
+  if(typeof L === 'undefined' || !document.getElementById('bpmap')) return;
+  const map = L.map('bpmap', {scrollWheelZoom:false}).setView([47.4979, 19.0402], 13);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom:19, attribution:'&copy; OpenStreetMap contributors'
+  }).addTo(map);
+  const bounds = [];
+  MAPPOINTS.forEach(p=>{
+    const m = L.circleMarker([p.lat,p.lng],
+      {radius:9, color:'#fff', weight:2, fillColor:p.cat, fillOpacity:1}).addTo(map);
+    const q = encodeURIComponent(p.name.replace(/ \(.*\)/,'') + " Budapest");
+    m.bindPopup(`<div class="mk-pop"><b>${p.name}</b><br>`+
+      `<a href="https://www.google.com/maps/search/?api=1&query=${q}" target="_blank" rel="noopener">↗ Directions</a></div>`);
+    m.bindTooltip(p.name);
+    bounds.push([p.lat,p.lng]);
+  });
+  map.fitBounds(bounds, {padding:[40,40]});
+})();
 </script>
 </body>
 </html>
