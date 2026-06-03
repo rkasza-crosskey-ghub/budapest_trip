@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="hu">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Budapest – Útikalauz</title>
+<title>Budapest — A Girls' Trip Guide · July 5–8</title>
 
 <!--
 ==================================================================
@@ -11,11 +11,17 @@
 ==================================================================
   1. A teljes tartalom lentebb, a <script id="data"> blokkban van,
      jól olvasható listákban. NE a HTML-t szerkeszd, hanem azt!
-  2. Keresd meg a megfelelő szekciót (LATNIVALOK, ETTERMEK, stb.)
+  2. Keresd meg a megfelelő szekciót (sights, food, nightlife, stb.)
   3. Egy bejegyzés így néz ki:
-        { cim: "Név", leiras: "Leírás...", info: "Pl. nyitvatartás" }
-  4. Új elem hozzáadása: másolj egy sort, írd át, tegyél elé vesszőt.
-  5. Mentés után töltsd fel újra a GitHubra -> a link frissül.
+        { tag:"Címke", title:"Név", text:"Leírás...", info:"pl. tipp",
+          img:"KÉP-URL vagy üres", map:true }
+     - img  : kép linkje. Ha üres ("") vagy rossz, a kártya kép nélkül jelenik meg.
+     - map  : ha true, megjelenik egy "📍 Map" gomb (Google Maps kereséssel).
+     - link : ha megadod, megjelenik egy "↗ Website" gomb.
+  4. Új elem: másolj egy { ... } sort, írd át, tegyél a végére vesszőt.
+  5. Mentés után töltsd fel újra GitHubra -> a megosztható link frissül.
+  KÉPEK: a https://commons.wikimedia.org/wiki/Special:FilePath/FÁJLNÉV?width=800
+         formátum mindig friss, jogtiszta képet ad (Wikimedia Commons).
 ==================================================================
 -->
 
@@ -43,29 +49,38 @@
 
   /* ---------- HERO ---------- */
   .hero{
-    position:relative;min-height:88vh;display:flex;align-items:flex-end;
+    position:relative;min-height:90vh;display:flex;align-items:flex-end;
     background:linear-gradient(to bottom,#2a1d3d 0%,#5a2a36 45%,#8a3413 100%);
     color:#fff;overflow:hidden;
   }
-  .hero .sky{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
-  .hero .veil{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(20,12,28,.05),rgba(20,12,28,.55));z-index:1}
-  .hero-inner{padding:0 24px 72px;max-width:1080px;margin:0 auto;width:100%;position:relative;z-index:2}
+  .hero .sky{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;opacity:.85}
+  .hero .veil{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(20,12,28,.15),rgba(20,12,28,.72));z-index:1}
+  .hero-inner{padding:0 24px 76px;max-width:1080px;margin:0 auto;width:100%;position:relative;z-index:2}
   .kicker{
     font-family:Georgia,serif;letter-spacing:.42em;text-transform:uppercase;
     font-size:.72rem;color:var(--gold);margin-bottom:18px;font-weight:bold;
   }
   .hero h1{
     font-size:clamp(3rem,9vw,6.4rem);line-height:.92;font-weight:normal;
-    letter-spacing:-.02em;text-shadow:0 3px 30px rgba(0,0,0,.5);
+    letter-spacing:-.02em;text-shadow:0 3px 30px rgba(0,0,0,.55);
   }
   .hero h1 em{color:var(--gold);font-style:italic}
-  .hero p{font-size:1.15rem;max-width:520px;margin-top:22px;opacity:.92}
+  .hero p{font-size:1.15rem;max-width:560px;margin-top:22px;opacity:.94;text-shadow:0 1px 12px rgba(0,0,0,.5)}
   .scroll-hint{
     position:absolute;bottom:24px;left:50%;transform:translateX(-50%);
-    font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;opacity:.7;
+    font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;opacity:.7;z-index:2;
     animation:bob 2s ease-in-out infinite;
   }
   @keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+
+  /* ---------- EMERGENCY / CONTACT BAND ---------- */
+  .contact{
+    background:var(--rust-dk);color:#fff;text-align:center;padding:18px 24px;
+    border-bottom:3px solid var(--gold);
+  }
+  .contact strong{color:#ffe1ad;letter-spacing:.04em}
+  .contact a{color:#fff;font-weight:bold;text-decoration:none;border-bottom:1px dotted #ffd58a}
+  .contact .small{display:block;font-size:.82rem;opacity:.85;margin-top:4px;font-style:italic}
 
   /* ---------- NAV ---------- */
   nav{
@@ -75,16 +90,16 @@
   nav .wrap{display:flex;flex-wrap:wrap;gap:4px;align-items:center;padding:12px 24px}
   nav .brand{font-weight:bold;letter-spacing:.1em;margin-right:auto;font-size:1.05rem}
   nav a{
-    color:var(--ink);text-decoration:none;font-size:.82rem;
-    letter-spacing:.08em;text-transform:uppercase;padding:6px 12px;
+    color:var(--ink);text-decoration:none;font-size:.8rem;
+    letter-spacing:.06em;text-transform:uppercase;padding:6px 11px;
     border-radius:2px;transition:.2s;
   }
   nav a:hover{background:var(--rust);color:#fff}
 
   /* ---------- SECTIONS ---------- */
-  section{padding:84px 0;border-bottom:1px solid var(--line)}
-  section:nth-child(even){background:var(--paper2)}
-  .sec-head{margin-bottom:48px;position:relative}
+  section{padding:80px 0;border-bottom:1px solid var(--line)}
+  section:nth-of-type(even){background:var(--paper2)}
+  .sec-head{margin-bottom:44px;position:relative}
   .sec-num{
     font-size:5rem;color:var(--line);font-style:italic;line-height:.7;
     display:block;margin-bottom:-8px;
@@ -92,35 +107,58 @@
   .sec-head h2{
     font-size:clamp(2rem,5vw,3.2rem);font-weight:normal;letter-spacing:-.01em;
   }
-  .sec-head .lead{margin-top:14px;max-width:620px;font-size:1.08rem;opacity:.85}
+  .sec-head .lead{margin-top:14px;max-width:640px;font-size:1.08rem;opacity:.85}
   .accent{height:3px;width:64px;background:var(--rust);margin-top:20px}
 
   /* ---------- CARDS ---------- */
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:24px}
   .card{
     background:var(--paper);border:1px solid var(--line);
-    border-radius:4px;padding:26px;transition:.25s;position:relative;
-    box-shadow:0 1px 0 rgba(0,0,0,.04);
+    border-radius:6px;overflow:hidden;transition:.25s;position:relative;
+    box-shadow:0 1px 0 rgba(0,0,0,.04);display:flex;flex-direction:column;
   }
-  section:nth-child(even) .card{background:#fff}
-  .card:hover{transform:translateY(-4px);box-shadow:0 14px 34px rgba(138,52,19,.13);border-color:var(--rust)}
-  .card h3{font-size:1.32rem;margin-bottom:8px;color:var(--rust-dk)}
-  .card p{font-size:.97rem;opacity:.88}
+  section:nth-of-type(even) .card{background:#fff}
+  .card:hover{transform:translateY(-4px);box-shadow:0 14px 34px rgba(138,52,19,.16);border-color:var(--rust)}
+  .card .photo{
+    height:178px;width:100%;object-fit:cover;display:block;
+    background:linear-gradient(135deg,#5a2a36,#8a3413);
+  }
+  .card .body{padding:22px 24px 24px}
+  .card h3{font-size:1.3rem;margin-bottom:8px;color:var(--rust-dk);line-height:1.2}
+  .card p{font-size:.97rem;opacity:.9}
   .card .info{
     margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);
-    font-size:.82rem;letter-spacing:.03em;color:var(--green);font-style:italic;
+    font-size:.83rem;letter-spacing:.02em;color:var(--green);font-style:italic;
   }
   .card .tag{
-    display:inline-block;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;
+    display:inline-block;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;
     background:var(--gold);color:var(--ink);padding:3px 9px;border-radius:99px;
-    margin-bottom:14px;font-family:Georgia,serif;
+    margin-bottom:12px;font-family:Georgia,serif;
   }
+  .links{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+  .links a{
+    font-size:.76rem;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;
+    color:var(--rust-dk);border:1px solid var(--line);padding:5px 11px;border-radius:99px;transition:.2s;
+  }
+  .links a:hover{background:var(--rust);color:#fff;border-color:var(--rust)}
+
+  /* ---------- ITINERARY ---------- */
+  .days{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+  .day{background:#fff;border:1px solid var(--line);border-radius:6px;padding:26px;border-top:5px solid var(--rust)}
+  .day h3{font-size:1.4rem;color:var(--rust-dk);margin-bottom:4px;font-weight:normal}
+  .day .sub{font-size:.8rem;text-transform:uppercase;letter-spacing:.12em;color:var(--green);margin-bottom:16px}
+  .day ul{list-style:none}
+  .day li{padding:9px 0 9px 22px;position:relative;font-size:.96rem;border-bottom:1px dashed var(--line)}
+  .day li:last-child{border-bottom:none}
+  .day li::before{content:"›";position:absolute;left:0;color:var(--rust);font-weight:bold}
+  .day li b{color:var(--ink)}
 
   /* ---------- FOOTER ---------- */
   footer{background:var(--ink);color:var(--paper);padding:56px 0;text-align:center}
   footer h3{font-size:1.6rem;font-weight:normal;margin-bottom:10px}
-  footer p{opacity:.6;font-size:.85rem}
+  footer p{opacity:.7;font-size:.9rem;max-width:560px;margin:6px auto 0}
   footer .gold{color:var(--gold)}
+  footer a{color:#ffd58a;text-decoration:none}
 
   /* reveal animation */
   .reveal{opacity:0;transform:translateY(24px);transition:.7s cubic-bezier(.2,.7,.2,1)}
@@ -128,132 +166,122 @@
 
   @media(max-width:640px){
     nav .brand{width:100%;margin-bottom:6px}
-    section{padding:60px 0}
+    section{padding:56px 0}
   }
 </style>
 </head>
 <body>
 
 <header class="hero">
-  <svg class="sky" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <defs>
-      <radialGradient id="moon" cx="50%" cy="50%" r="50%">
-        <stop offset="0%" stop-color="#fff6d8"/><stop offset="100%" stop-color="#fff6d8" stop-opacity="0"/>
-      </radialGradient>
-      <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0%" stop-color="#3a2440"/><stop offset="100%" stop-color="#241526"/>
-      </linearGradient>
-    </defs>
-    <!-- moon glow -->
-    <circle cx="1180" cy="150" r="160" fill="url(#moon)" opacity=".5"/>
-    <circle cx="1180" cy="150" r="46" fill="#fdf3cf" opacity=".9"/>
-    <!-- stars -->
-    <g fill="#ffe9b0">
-      <circle cx="220" cy="90" r="1.6"/><circle cx="400" cy="160" r="1.2"/><circle cx="640" cy="70" r="1.5"/>
-      <circle cx="860" cy="130" r="1.1"/><circle cx="980" cy="60" r="1.4"/><circle cx="320" cy="220" r="1"/>
-      <circle cx="720" cy="200" r="1.2"/><circle cx="1320" cy="240" r="1.4"/><circle cx="120" cy="180" r="1.2"/>
-    </g>
-    <!-- Buda castle hill silhouette (left) -->
-    <path d="M0,520 Q120,470 260,485 L300,470 L340,485 Q460,470 560,500 L560,800 L0,800 Z" fill="#3d2433"/>
-    <rect x="180" y="430" width="120" height="70" fill="#4a2c3c"/>
-    <rect x="205" y="400" width="18" height="32" fill="#4a2c3c"/><rect x="258" y="400" width="18" height="32" fill="#4a2c3c"/>
-    <circle cx="240" cy="392" r="22" fill="#4a2c3c"/>
-    <!-- Parliament (right of centre) -->
-    <g fill="#5a3142">
-      <rect x="820" y="430" width="320" height="170"/>
-      <!-- central dome -->
-      <rect x="950" y="330" width="60" height="100"/>
-      <path d="M950,330 Q980,250 1010,330 Z"/>
-      <rect x="975" y="210" width="10" height="48"/>
-      <!-- side spires -->
-      <path d="M845,430 L845,360 L860,335 L875,360 L875,430 Z"/>
-      <path d="M1085,430 L1085,360 L1100,335 L1115,360 L1115,430 Z"/>
-    </g>
-    <!-- windows glow -->
-    <g fill="#ffcf6e" opacity=".85">
-      <rect x="835" y="455" width="6" height="14"/><rect x="855" y="455" width="6" height="14"/>
-      <rect x="875" y="455" width="6" height="14"/><rect x="1100" y="455" width="6" height="14"/>
-      <rect x="1120" y="455" width="6" height="14"/><rect x="965" y="360" width="6" height="14"/>
-      <rect x="990" y="360" width="6" height="14"/>
-    </g>
-    <!-- water -->
-    <rect x="0" y="600" width="1440" height="200" fill="url(#water)"/>
-    <!-- chain bridge -->
-    <g stroke="#6e4150" stroke-width="4" fill="none" opacity=".9">
-      <path d="M560,600 Q700,540 840,600"/>
-      <path d="M300,600 Q430,560 560,600"/>
-      <line x1="560" y1="520" x2="560" y2="600"/>
-      <line x1="840" y1="540" x2="840" y2="600"/>
-      <line x1="300" y1="560" x2="300" y2="600"/>
-    </g>
-    <!-- reflections -->
-    <g fill="#ffcf6e" opacity=".18">
-      <rect x="950" y="610" width="60" height="120"/>
-      <rect x="835" y="610" width="6" height="90"/><rect x="1100" y="610" width="6" height="90"/>
-    </g>
-  </svg>
+  <img class="sky" alt="Budapest by night"
+       src="https://commons.wikimedia.org/wiki/Special:FilePath/Sz%C3%A9chenyi%20Chain%20Bridge%20in%20Budapest%20at%20night.jpg?width=1600"
+       onerror="this.style.display='none'">
   <div class="veil"></div>
   <div class="hero-inner">
-    <div class="kicker">Útikalauz &middot; 2026</div>
+    <div class="kicker">A Girls' Trip Guide &middot; 5–8 July</div>
     <h1>Buda<em>pest</em></h1>
-    <p>A Duna gyöngyszeme — termálfürdők, romkocsmák, ezeréves történelem és élő esti fények. Minden, amit egy látogatáshoz tudnod kell.</p>
+    <p>The pearl of the Danube — thermal baths, ruin bars, a thousand years of history and a skyline that glows at night. Everything five friends need for the perfect long weekend.</p>
   </div>
-  <div class="scroll-hint">görgess lejjebb</div>
+  <div class="scroll-hint">scroll down</div>
 </header>
+
+<div class="contact">
+  <strong>★ Local help</strong> — anything goes wrong, you can call
+  <a href="tel:+36204759235">Roland Kasza · +36 20 475 9235</a>
+  <span class="small">A local friend of yours back home — happy to help if you get stuck.</span>
+</div>
 
 <nav>
   <div class="wrap">
     <span class="brand">★ BUDAPEST</span>
-    <a href="#latnivalok">Látnivalók</a>
-    <a href="#ettermek">Gasztro</a>
-    <a href="#programok">Programok</a>
-    <a href="#info">Infók</a>
+    <a href="#stay">Where to stay</a>
+    <a href="#sights">Sights</a>
+    <a href="#nature">Baths &amp; parks</a>
+    <a href="#food">Food</a>
+    <a href="#night">Nightlife</a>
+    <a href="#plan">3-day plan</a>
+    <a href="#info">Tips</a>
   </div>
 </nav>
 
-<!-- A szekciók tartalmát a lenti adatból a script tölti fel automatikusan -->
-<section id="latnivalok">
+<section id="stay">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">00</span>
+      <h2>Buda or Pest?</h2>
+      <p class="lead">Short answer: stay in <b>Pest</b>. Buda is the pretty, hilly, historic side (castle, views) — but Pest is where the food, drinks, culture and walkable energy are. Here are the best neighbourhoods.</p>
+      <div class="accent"></div>
+    </div>
+    <div class="grid" id="grid-stay"></div>
+  </div>
+</section>
+
+<section id="sights">
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="sec-num">01</span>
-      <h2>Látnivalók</h2>
-      <p class="lead">A kötelező megállók — a budai Vártól a Parlament neogótikus csipkéjéig.</p>
+      <h2>Sights &amp; beautiful buildings</h2>
+      <p class="lead">The must-sees — from the neo-Gothic Parliament to the fairy-tale towers of the Buda Castle district.</p>
       <div class="accent"></div>
     </div>
-    <div class="grid" id="grid-latnivalok"></div>
+    <div class="grid" id="grid-sights"></div>
   </div>
 </section>
 
-<section id="ettermek">
+<section id="nature">
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="sec-num">02</span>
-      <h2>Éttermek &amp; gasztro</h2>
-      <p class="lead">Gulyástól a fine diningig — hol egyél, hogy emlékezetes maradjon.</p>
+      <h2>Baths, parks &amp; nature</h2>
+      <p class="lead">Steaming thermal pools, a fairy-tale castle on a lake, a green island in the Danube, and a half-day escape up into the Buda Hills.</p>
       <div class="accent"></div>
     </div>
-    <div class="grid" id="grid-ettermek"></div>
+    <div class="grid" id="grid-nature"></div>
   </div>
 </section>
 
-<section id="programok">
+<section id="food">
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="sec-num">03</span>
-      <h2>Programok &amp; éjszakai élet</h2>
-      <p class="lead">Romkocsmák, fürdőpartik és esti hajózás a kivilágított Dunán.</p>
+      <h2>Eat &amp; drink well</h2>
+      <p class="lead">Aesthetic, tasty and <i>not</i> tourist traps. July is peak season — book dinner ahead!</p>
       <div class="accent"></div>
     </div>
-    <div class="grid" id="grid-programok"></div>
+    <div class="grid" id="grid-food"></div>
+  </div>
+</section>
+
+<section id="night">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">04</span>
+      <h2>Nightlife &amp; views</h2>
+      <p class="lead">Ruin bars, rooftop cocktails, a Ferris wheel and the magic of the lit-up Danube from the water.</p>
+      <div class="accent"></div>
+    </div>
+    <div class="grid" id="grid-night"></div>
+  </div>
+</section>
+
+<section id="plan">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">05</span>
+      <h2>A suggested 3-day plan</h2>
+      <p class="lead">A loose, geographically-logical route so you're never zig-zagging across the city. Mix and match freely.</p>
+      <div class="accent"></div>
+    </div>
+    <div class="days" id="grid-days"></div>
   </div>
 </section>
 
 <section id="info">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="sec-num">04</span>
-      <h2>Gyakorlati infók</h2>
-      <p class="lead">Közlekedés, szállás, fizetés — a praktikus tudnivalók egy helyen.</p>
+      <span class="sec-num">06</span>
+      <h2>Practical tips</h2>
+      <p class="lead">Transport, taxis, money and the little things that make it smooth.</p>
       <div class="accent"></div>
     </div>
     <div class="grid" id="grid-info"></div>
@@ -262,8 +290,9 @@
 
 <footer>
   <div class="wrap">
-    <h3>Jó utat Budapestre! <span class="gold">★</span></h3>
-    <p>Készült útikalauznak &middot; A friss infókat bármikor frissítheted a fájlban</p>
+    <h3>Have an amazing trip, girls! <span class="gold">★</span></h3>
+    <p>Put together with love for your July long weekend in Budapest.</p>
+    <p>Stuck or need a local tip? Call <a href="tel:+36204759235">Roland Kasza · +36 20 475 9235</a>.</p>
   </div>
 </footer>
 
@@ -271,57 +300,138 @@
 ==================================================================
   ★★★  EZT A RÉSZT SZERKESZD  ★★★
   Itt van minden tartalom. Írd át, törölj, vagy adj hozzá elemeket.
-  Minden elem: { tag:"címke", cim:"Cím", leiras:"...", info:"..." }
-  A "tag" és "info" elhagyható (üres "" is lehet).
+  { tag, title, text, info, img, map, link } — tag/info/img/map/link elhagyható.
 ==================================================================
 -->
 <script id="data">
+const F = "https://commons.wikimedia.org/wiki/Special:FilePath/"; // Wikimedia kép-előtag
+const W = "?width=800";
+
 const TARTALOM = {
 
-  latnivalok: [
-    { tag:"Ikon", cim:"Országház (Parlament)", leiras:"A Duna-part neogótikus szimbóluma, a brit parlament ihlette. Esti kivilágításban a legszebb. Belső vezetett túrák foglalhatók.", info:"Tipp: jegyet előre foglalj online" },
-    { tag:"Világörökség", cim:"Budai Várnegyed", leiras:"Királyi palota, a Mátyás-templom és macskaköves utcák. A Magyar Nemzeti Galéria is itt található, páratlan panorámával Pestre.", info:"A Sikló vagy gyalogút felfelé" },
-    { tag:"Panoráma", cim:"Halászbástya", leiras:"Neoromán teraszok, mesebeli tornyok és a város egyik legjobb kilátása. Hajnalban szinte üres.", info:"Felső teraszok: kis belépő" },
-    { tag:"Templom", cim:"Szent István-bazilika", leiras:"Budapest legnagyobb temploma, kupolájából 360°-os kilátás. Pénztárca- és családbarát program.", info:"Kupola: lift vagy lépcső" },
-    { tag:"Fürdő", cim:"Széchenyi Gyógyfürdő", leiras:"Európa egyik legnagyobb gyógyfürdője a Városligetben — kültéri medencék gőzölögnek télen is.", info:"Hozz papucsot és fürdősapkát" },
-    { tag:"Zöld", cim:"Margitsziget", leiras:"2,5 km hosszú zöld oázis a Duna közepén: futópályák, japánkert, zenélő szökőkút. Tökéletes pihenőnap.", info:"Bringa- és rollerbérlés a hídnál" }
+  stay: [
+    { tag:"Top pick", title:"District VI · Terézváros", text:"The sweet spot. Safe, elegant, home to grand Andrássy Avenue (the 'Champs-Élysées of Budapest') and a short walk from both the nightlife and the major sights. Best balance of culture and fun.", info:"Great base for a first visit", map:true },
+    { tag:"Nightlife", title:"District VII · Jewish Quarter", text:"Erzsébetváros — the buzzing heart of the ruin-bar scene. Step out the door and you're surrounded by bars and restaurants. Just check recent reviews so your place isn't right above a loud bar.", info:"Lively day & night", map:true },
+    { tag:"Upscale", title:"District V · Belváros", text:"The polished downtown by the river and Parliament. Cleaner and more upmarket, a touch pricier and slightly further from the trendy spots — lovely if you want calm and elegance.", info:"Riverside & central", map:true }
   ],
 
-  ettermek: [
-    { tag:"Klasszikus", cim:"Gundel", leiras:"A magyar gasztronómia legendás neve a Városliget szélén — Gundel-palacsinta kötelező.", info:"Elegáns; foglalás ajánlott" },
-    { tag:"Street food", cim:"Lángos a piacon", leiras:"A Nagyvásárcsarnok emeletén tejföllel-sajttal — az igazi magyar utcai klasszikus.", info:"Készpénz gyakran gyorsabb" },
-    { tag:"Modern", cim:"Fine dining (belváros)", leiras:"Több Michelin-csillagos és bib gourmand hely a belvárosban a modern magyar konyháért.", info:"Hetekkel előre foglalj" },
-    { tag:"Helyi", cim:"Gulyás & étkezde", leiras:"Hagyományos magyar étkezdék (étkezde) bőséges, olcsó házias fogásokkal — gulyás, pörkölt, schnitzel.", info:"Ebédmenü a legjobb ár" }
+  sights: [
+    { tag:"Icon", title:"Hungarian Parliament", text:"The neo-Gothic symbol of the Danube bank, inspired by Westminster. Stunning from the outside — the best view is from the Buda side at sunset, or from the water. Book a guided interior tour online in advance.",
+      info:"Best photo: from the opposite (Buda) riverbank", img:F+"Parliament%20Building%20Budapest%20Hungary.jpg"+W, map:true },
+    { tag:"Castle Hill", title:"Buda Castle & the Funicular", text:"Take the vintage 1870 Castle Hill Funicular (Sikló) up from Clark Ádám Square by the Chain Bridge for gorgeous views as you climb. Up top, wander the palace courtyards and the Savoyai Terrace overlooking the Danube.",
+      info:"Funicular up, stroll the grounds (museums optional)", img:F+"The%20Former%20Royal%20Palace%20on%20the%20Buda%20bankside.JPG"+W, map:true },
+    { tag:"Panorama", title:"Fisherman's Bastion & Matthias Church", text:"Neo-Romanesque terraces with fairy-tale turrets and the best panorama in the city. Right next to the colourful-roofed Matthias Church. Go early morning and you'll have it almost to yourselves.",
+      info:"Upper terraces: small fee · go at sunrise", img:F+"Fishermans%20bastion%20Budapest%20IMG%201429.JPG"+W, map:true },
+    { tag:"Church + treat", title:"St. Stephen's Basilica + Gelarto Rosa", text:"Budapest's grandest church, with a 360° view from the dome (lift or stairs, small fee). Right beside it, stop at Gelarto Rosa for artisan gelato shaped into beautiful roses — the perfect photogenic summer treat.",
+      info:"Dome view + rose-shaped ice cream next door", img:F+"HUN-2015-Budapest-St.%20Stephen%27s%20Basilica.jpg"+W, map:true, link:"https://gelartorosa.com/en/" },
+    { tag:"Reopened 2026", title:"Citadella & Gellért Hill", text:"You picked the perfect year — the Citadella reopened in March 2026 after a decade of renovation. Now a green hilltop park with new viewing terraces, a café and the 'Bastion of Freedom' exhibition. Breathtaking 360° views; easy to combine with the Buda Castle side.",
+      info:"Best all-round panorama of the city", img:F+"Budapest%20Gell%C3%A9rtberg%201.JPG"+W, map:true },
+    { tag:"Walk it", title:"Chain Bridge (Lánchíd)", text:"The iconic 19th-century bridge linking Buda and Pest, guarded by stone lions. Beautiful to walk across by day and magical lit up at night — your gateway between the two sides of the city.",
+      info:"Stunning after dark", img:F+"Sz%C3%A9chenyi%20Chain%20Bridge%20in%20Budapest%20at%20night.jpg"+W, map:true }
   ],
 
-  programok: [
-    { tag:"Éjszaka", cim:"Romkocsma-túra", leiras:"A Szimpla Kert és társai a régi zsidónegyedben — bontásra ítélt házakból lett bárok, egyedi hangulat.", info:"Belváros, VII. kerület" },
-    { tag:"Élmény", cim:"Esti dunai hajózás", leiras:"A kivilágított Parlament és a hidak a vízről — vacsorás vagy italos sétahajók indulnak esténként.", info:"Naplemente után a legszebb" },
-    { tag:"Buli", cim:"Fürdőparti (Sparty)", leiras:"Éjszakai fürdőbuli a Széchenyiben — zene, fények a termálvízben. Szezonális, főleg hétvégén.", info:"Jegy online, korhatáros" },
-    { tag:"Kultúra", cim:"Koncert / Opera", leiras:"A Magyar Állami Operaház és számos koncertterem — Vivalditól a komolyzenéig.", info:"Diák/last-minute jegyek" }
+  nature: [
+    { tag:"Must-do", title:"Széchenyi Thermal Baths", text:"A massive, gorgeous neo-Baroque palace with steaming outdoor thermal pools — the quintessential Budapest experience. Go early in the morning to beat the summer crowds.",
+      info:"Bring flip-flops & a swim cap for lap pools", img:F+"Szechenyi%20Baths%20and%20Pool%20Budapest%208.JPG"+W, map:true },
+    { tag:"Fairy-tale", title:"City Park & Vajdahunyad Castle", text:"Right next to the Széchenyi Baths. A storybook castle on a lake mixing Romanesque, Gothic, Renaissance and Baroque styles. In July you can rent a rowboat on the lake right in front — very photogenic for a group.",
+      info:"Combine with your bath visit", img:F+"Budapest%20Burg%20Vajdahunyad.JPG"+W, map:true },
+    { tag:"Green oasis", title:"Margaret Island", text:"A lush, car-free island in the middle of the Danube and the locals' favourite summer hangout. Rent a 'Bringóhintó' (canopy pedal-cart for the group), see the musical fountain, the Rose and Japanese Gardens, and grab a fröccs (wine spritzer) at a pop-up bar.",
+      info:"2.5 km loop — rent a pedal-cart together", img:F+"Rose%20Garden%20%28S%29.%20-%20Margaret%20Island%2C%20Budapest%2C%20Hungary.JPG"+W, map:true },
+    { tag:"Half-day escape", title:"The Buda Hills circuit", text:"If you fancy nature: ride the vintage red Cogwheel Railway up, switch to the Children's Railway (a real forest train run almost entirely by schoolkids!), hike to the Erzsébet Lookout Tower, then float back down on the open-air Libegő chairlift over the treetops.",
+      info:"Note: the lookout tower's inner stairs are temporarily closed (frost damage) but the views around it & the chairlift are open", img:F+"Children%27s%20Railway%2C%20Szechenyi%20Hill%20terminus.%20Main%20building.%20-%20Budapest%27s%2012th%20district%2C%20Hegyh%C3%A1t%20Way.JPG"+W, map:true }
+  ],
+
+  food: [
+    { tag:"Brunch", title:"Cirkusz", text:"Amazing brunch in the Jewish Quarter. No reservations, so expect a queue — but it moves fast and it's worth it.", info:"Get there a bit early", map:true },
+    { tag:"Brunch", title:"Béchamel", text:"Another fantastic brunch spot, near the Basilica. Great if Cirkusz has a long line.", info:"Near St. Stephen's", map:true },
+    { tag:"Hungarian", title:"Gettó Gulyás", text:"Authentic Hungarian food — goulash, chicken paprikash — that's trendy and tasty without the tourist-trap prices. In the Jewish Quarter.", info:"Book ahead in summer", map:true },
+    { tag:"Aesthetic", title:"Twentysix (26)", text:"A stunning indoor 'botanical garden' restaurant — lush greenery everywhere, gorgeous Mediterranean food. Perfect for a girls' group. Book well in advance.", info:"Reserve early!", map:true },
+    { tag:"Atmosphere", title:"Mazel Tov", text:"A gorgeous, upscale ruin-bar-style restaurant serving Middle Eastern food under a canopy of plants and string lights. Popular with tourists, but the food and vibe fully justify it.", info:"Reservation recommended", map:true },
+    { tag:"Lively", title:"Dobrumba", text:"Fantastic Middle Eastern / Mediterranean small plates with a buzzy, fun atmosphere. A local favourite.", info:"Great for sharing", map:true },
+    { tag:"Quick bite", title:"Bamba Marha Burger Bar", text:"Need a fast, delicious meal between sights? This beloved local burger chain does excellent craft burgers (100% beef, fresh buns, homemade sauces) plus solid veggie options. Several handy locations near the main sights.", info:"Casual & quick", map:true },
+    { tag:"Heads-up", title:"New York Café — look, don't dine", text:"Famously beautiful but wildly overpriced and a total tourist trap. Pop in for the photos or one (pricey) coffee if you must, but skip the meal.", info:"Photo stop only", map:true }
+  ],
+
+  night: [
+    { tag:"Original", title:"Szimpla Kert", text:"The first and most famous ruin bar — an eclectic, chaotic, wonderful maze of mismatched furniture, plants and art in a crumbling old building. Go late afternoon / early evening for a drink to skip the late-night queues.",
+      info:"Jewish Quarter, District VII", img:F+"A%20Bar%20in%20Szimpla%20Kert.jpg"+W, map:true },
+    { tag:"Rooftop", title:"High Note SkyBar", text:"A fabulous rooftop bar right beside St. Stephen's Basilica — great cocktails and an unbeatable, almost touch-the-dome view. Lovely at sunset.", info:"Smart-casual · book a table", map:true },
+    { tag:"Cocktails", title:"Boutiq'Bar", text:"One of the city's top cocktail bars if you want a proper mixology experience with expert bartenders.", info:"Intimate — reserve ahead", map:true },
+    { tag:"Views", title:"Budapest Eye", text:"A giant Ferris wheel on Erzsébet Square, a 2-minute walk from the Basilica. Sweeping views over the Pest rooftops to the Buda hills — especially magical at sunset or after dark. Grab a chimney cake (kürtőskalács) nearby.",
+      info:"Best at golden hour", img:F+"Budapest%2C%20V.%20Erzs%C3%A9bet%20t%C3%A9r%2C%20Budapest%20Sziget%20Eye.JPG"+W, map:true },
+    { tag:"Magical", title:"Evening Danube cruise", text:"Highly recommended. The Parliament, bridges and Buda Castle glowing from the water are unforgettable. Easy to book a 1-hour prosecco cruise online.", info:"Go after sunset", map:false }
   ],
 
   info: [
-    { tag:"Közlekedés", cim:"BKK & jegyek", leiras:"Metró, villamos, busz, HÉV egy rendszerben. A BudapestGO appban vehetsz jegyet/bérletet. A 2-es villamos a Duna mentén maga is látványosság.", info:"Felszállás előtt érvényesíts" },
-    { tag:"Reptér", cim:"Repülőtér → város", leiras:"A 100E reptéri busz közvetlenül a belvárosba (Deák tér). Taxi: csak hivatalos, fixáras (Főtaxi).", info:"100E: külön jegy kell" },
-    { tag:"Fizetés", cim:"Pénz & kártya", leiras:"A pénznem a forint (HUF). Kártyát szinte mindenhol elfogadnak, de piacokon/kis helyeken jó kis készpénzt vinni.", info:"Ne válts pénzt az utcán" },
-    { tag:"Szállás", cim:"Hol szállj meg", leiras:"V–VII. kerület a legközpontibb (séta táv mindenhova). VI. kerület (Andrássy) elegáns; budai oldal csendesebb.", info:"Foglalj korán főszezonban" },
-    { tag:"Hasznos", cim:"Jó tudni", leiras:"Az ivóvíz iható a csapból. Borravaló kb. 10–12%. A legtöbb hely beszél angolul a belvárosban.", info:"Mentő/rendőr/tűz: 112" }
+    { tag:"Taxis", title:"Use the Bolt app", text:"Never hail a cab off the street — you'll get overcharged. Download the Bolt app to order official, metered rides easily and cheaply.", info:"Bolt = the local Uber" },
+    { tag:"Transport", title:"BudapestGO app & the 4/6 tram", text:"Public transport (BKK) is excellent. Buy digital 24/72h passes in the BudapestGO app. The 4/6 tram runs 24/7 and is super safe; the no.2 tram along the Danube is a sight in itself.", info:"Validate / activate before boarding" },
+    { tag:"Money", title:"Forint & cards", text:"Currency is the Hungarian forint (HUF). Cards work almost everywhere, but carry a little cash for markets and small spots. Never change money on the street.", info:"Tap-to-pay is widely accepted" },
+    { tag:"Tipping", title:"Tips & service charge", text:"10–15% is standard. But always check the bill first — many modern places already add a 12.5% service charge, so you don't double-tip.", info:"Check before you add a tip" },
+    { tag:"Airport", title:"Airport → city", text:"The 100E airport bus runs straight to the centre (Deák tér) — it needs a separate ticket. For a taxi, use Bolt or the official Főtaxi rank.", info:"100E bus = fast & cheap" },
+    { tag:"Good to know", title:"Handy basics", text:"Tap water is safe to drink. Most people in the centre speak English. July is hot — pack sunscreen and a refillable bottle.", info:"Emergency (police/ambulance/fire): 112" }
   ]
 };
 
-// ---- Az alábbi részt NEM kell szerkeszteni: ez rajzolja ki a kártyákat ----
+// 3-day itinerary (kulcs: 'days')
+const NAPOK = [
+  { title:"Day 1 · Pest classics", sub:"Sun 5 July · arrival & downtown",
+    items:[
+      "Settle into your <b>District VI / VII</b> base, then stroll <b>Andrássy Avenue</b>",
+      "<b>St. Stephen's Basilica</b> + dome view, gelato at <b>Gelarto Rosa</b>",
+      "Sunset on the <b>Budapest Eye</b>, drinks at <b>High Note SkyBar</b>",
+      "Dinner at <b>Twentysix</b> or <b>Mazel Tov</b>, nightcap at <b>Szimpla Kert</b>"
+    ]},
+  { title:"Day 2 · Buda & the river", sub:"Mon 6 July · castle, hill & cruise",
+    items:[
+      "Walk the <b>Chain Bridge</b>, ride the <b>Funicular</b> up to <b>Buda Castle</b>",
+      "<b>Fisherman's Bastion</b> & <b>Matthias Church</b> (go earlyish)",
+      "Over to <b>Citadella / Gellért Hill</b> for the big panorama",
+      "Brunch/lunch at <b>Cirkusz</b> or <b>Béchamel</b>, burgers at <b>Bamba Marha</b> if hungry",
+      "Evening <b>Danube cruise</b> to see the city lit up"
+    ]},
+  { title:"Day 3 · Baths & green", sub:"Tue 7 July · relax day (+ depart 8th)",
+    items:[
+      "Morning at the <b>Széchenyi Baths</b> (arrive early)",
+      "Next door: <b>Vajdahunyad Castle</b> & a rowboat in <b>City Park</b>",
+      "Optional: half-day <b>Buda Hills</b> circuit (cogwheel → kids' railway → Libegő)",
+      "Wind down on <b>Margaret Island</b> with a fröccs",
+      "Farewell dinner at <b>Gettó Gulyás</b> or <b>Dobrumba</b>"
+    ]}
+];
+
+// ---- Az alábbi részt NEM kell szerkeszteni: ez rajzolja ki az oldalt ----
+function mapsLink(e){
+  const q = encodeURIComponent((e.map === true ? e.title : e.map) + " Budapest");
+  return "https://www.google.com/maps/search/?api=1&query=" + q;
+}
 function render(){
   for(const [kulcs, elemek] of Object.entries(TARTALOM)){
     const grid = document.getElementById('grid-'+kulcs);
     if(!grid) continue;
     grid.innerHTML = elemek.map(e=>`
       <article class="card reveal">
-        ${e.tag ? `<span class="tag">${e.tag}</span><br>`:''}
-        <h3>${e.cim||''}</h3>
-        <p>${e.leiras||''}</p>
-        ${e.info ? `<div class="info">› ${e.info}</div>`:''}
+        ${e.img ? `<img class="photo" loading="lazy" alt="${e.title||''}" src="${e.img}" onerror="this.style.display='none'">`:''}
+        <div class="body">
+          ${e.tag ? `<span class="tag">${e.tag}</span><br>`:''}
+          <h3>${e.title||''}</h3>
+          <p>${e.text||''}</p>
+          ${e.info ? `<div class="info">› ${e.info}</div>`:''}
+          ${(e.map || e.link) ? `<div class="links">
+            ${e.map ? `<a href="${mapsLink(e)}" target="_blank" rel="noopener">📍 Map</a>`:''}
+            ${e.link ? `<a href="${e.link}" target="_blank" rel="noopener">↗ Website</a>`:''}
+          </div>`:''}
+        </div>
       </article>`).join('');
+  }
+  // itinerary
+  const days = document.getElementById('grid-days');
+  if(days){
+    days.innerHTML = NAPOK.map(d=>`
+      <div class="day reveal">
+        <h3>${d.title}</h3>
+        <div class="sub">${d.sub}</div>
+        <ul>${d.items.map(i=>`<li>${i}</li>`).join('')}</ul>
+      </div>`).join('');
   }
   // scroll reveal
   const io = new IntersectionObserver(es=>{
