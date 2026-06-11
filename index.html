@@ -179,6 +179,7 @@
   footer p{opacity:.7;font-size:.9rem;max-width:560px;margin:6px auto 0}
   footer .gold{color:var(--gold)}
   footer a{color:#ffd58a;text-decoration:none}
+  footer .version{margin-top:22px;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;opacity:.45}
 
   /* reveal animation */
   .reveal{opacity:0;transform:translateY(24px);transition:.7s cubic-bezier(.2,.7,.2,1)}
@@ -358,6 +359,7 @@
     <h3 data-en="Have an amazing trip, girls! <span class='gold'>★</span>" data-sv="Ha en fantastisk resa, tjejer! <span class='gold'>★</span>"></h3>
     <p data-en="Put together with love for your July long weekend in Budapest." data-sv="Sammanställt med kärlek inför er långhelg i Budapest i juli."></p>
     <p><span data-en="Stuck or need a local tip? Call " data-sv="Kör ni fast eller behöver ett lokalt tips? Ring "></span><a href="tel:+36204759235">Roland Kasza · +36 20 475 9235</a>.</p>
+    <p class="version" id="version"></p>
   </div>
 </footer>
 
@@ -369,6 +371,11 @@
 <script id="data">
 const F = "https://commons.wikimedia.org/wiki/Special:FilePath/"; // Wikimedia kép-előtag
 const W = "?width=800";
+
+// ★ VERZIÓ — minden frissítésnél növeld a számot és írd át a dátumot (ÉÉÉÉ-HH-NN).
+//   Így a lányok a lábléc alján rögtön látják, hogy frissült-e az oldal.
+const VERSION = "1.1";
+const UPDATED = "2026-06-11";
 
 const TARTALOM = {
 
@@ -434,6 +441,31 @@ const TARTALOM = {
       text:{en:"Right next to the Széchenyi Baths. A storybook castle on a lake mixing Romanesque, Gothic, Renaissance and Baroque styles. In July you can rent a rowboat on the lake right in front — very photogenic for a group.",
             sv:"Precis bredvid Széchenyi-badet. Ett sagoslott vid en sjö som blandar romansk, gotisk, renässans- och barockstil. I juli kan ni hyra en roddbåt på sjön framför — väldigt fotogeniskt för ett gäng."},
       info:{en:"Combine with your bath visit",sv:"Kombinera med badbesöket"} },
+    { tag:{en:"All in one spot",sv:"Allt på ett ställe"}, map:false,
+      title:{en:"…and more, all around City Park",sv:"…och mer, runt om i Stadsparken"},
+      text:{en:"The whole City Park (Városliget) is one big cluster — the baths, Vajdahunyad Castle and everything below are within a short walk of each other, so you can easily do several in one relaxed afternoon.",
+            sv:"Hela Stadsparken (Városliget) är ett enda stort kluster — badet, Vajdahunyad-slottet och allt nedan ligger inom en kort promenad från varandra, så ni hinner lätt med flera på en avslappnad eftermiddag."},
+      info:{en:"Everything below is a few minutes apart",sv:"Allt nedan ligger några minuter ifrån varandra"} },
+    { tag:{en:"Bird's-eye view",sv:"Fågelperspektiv"}, map:true,
+      title:{en:"Ballon Budapest (City Park balloon)",sv:"Ballon Budapest (luftballong i Stadsparken)"},
+      text:{en:"A tethered helium balloon that floats ~150 m up over City Park for a calm, 360° bird's-eye view of the whole city — a gentler, higher alternative to the Ferris wheel, right by the lake and Vajdahunyad Castle.",
+            sv:"En förankrad heliumballong som svävar ~150 m upp över Stadsparken för en lugn 360°-vy över hela staden — ett mjukare, högre alternativ till pariserhjulet, precis vid sjön och Vajdahunyad-slottet."},
+      info:{en:"Weather-dependent · best on a clear day",sv:"Väderberoende · bäst en klar dag"} },
+    { tag:{en:"Family / Art Nouveau",sv:"Familj / Jugend"}, map:true,
+      title:{en:"Budapest Zoo & Botanical Garden",sv:"Budapests djurpark & botaniska trädgård"},
+      text:{en:"One of the world's oldest zoos (1866) and a beauty in its own right — the Art Nouveau Elephant House and the giant glass Biodome are worth seeing even if animals aren't your thing. A lovely, shady stroll on a hot July day.",
+            sv:"En av världens äldsta djurparker (1866) och vacker i sig — det jugendstilade elefanthuset och den enorma glas-Biodomen är värda att se även om djur inte är er grej. En härlig, skuggig promenad en varm julidag."},
+      info:{en:"Go for the gorgeous Art Nouveau architecture",sv:"Gå för den vackra jugendarkitekturen"} },
+    { tag:{en:"Show",sv:"Föreställning"}, map:true,
+      title:{en:"Capital Circus of Budapest",sv:"Budapests stora cirkus"},
+      text:{en:"Europe's only permanent stone-built circus, right next to the zoo. If a show falls on your dates it's a fun, slightly retro evening out — check the programme online before you go.",
+            sv:"Europas enda permanenta cirkus i sten, precis bredvid djurparken. Om en föreställning hamnar på era datum är det en rolig, lite retro kväll — kolla programmet online innan ni går."},
+      info:{en:"Check the show schedule online",sv:"Kolla föreställningsschemat online"} },
+    { tag:{en:"Architecture",sv:"Arkitektur"}, map:true,
+      title:{en:"Museum of Ethnography",sv:"Etnografiska museet"},
+      text:{en:"A striking modern building on the edge of the park — its sweeping, grass-topped roof doubles as a free public terrace with great views over City Park. Worth it for the architecture and rooftop alone, with Hungarian folk culture inside.",
+            sv:"En slående modern byggnad i parkens kant — det svepande, gräsklädda taket fungerar som en gratis offentlig terrass med fin utsikt över Stadsparken. Värt det för arkitekturen och taket i sig, med ungersk folkkultur inuti."},
+      info:{en:"Walk up to the free rooftop terrace",sv:"Gå upp till den gratis takterrassen"} },
     { tag:{en:"Green oasis",sv:"Grön oas"}, map:true, img:F+"Rose%20Garden%20%28S%29.%20-%20Margaret%20Island%2C%20Budapest%2C%20Hungary.JPG"+W,
       title:{en:"Margaret Island",sv:"Margaretaön"},
       text:{en:"A lush, car-free island in the middle of the Danube and the locals' favourite summer hangout. Rent a 'Bringóhintó' (canopy pedal-cart for the group), see the musical fountain, the Rose and Japanese Gardens, and grab a fröccs (wine spritzer) at a pop-up bar.",
@@ -628,11 +660,19 @@ function applyChrome(){
   document.documentElement.lang = LANG;
 }
 
+function renderVersion(){
+  const el = document.getElementById('version');
+  if(!el) return;
+  const upd = LANG === 'sv' ? 'uppdaterad' : 'updated';
+  el.textContent = `v${VERSION} · ${upd} ${UPDATED}`;
+}
+
 function setLang(l){
   LANG = l;
   localStorage.setItem('lang', l);
   document.querySelectorAll('#lang button').forEach(b=>b.classList.toggle('active', b.dataset.l === l));
   applyChrome();
+  renderVersion();
   renderContent();
 }
 
@@ -652,6 +692,10 @@ const MAPPOINTS = [
   // --- Baths, parks & nature ---
   {name:"Széchenyi Thermal Baths",         cat:"#4a5d3a", lat:47.5188, lng:19.0822},
   {name:"Vajdahunyad Castle (City Park)",  cat:"#4a5d3a", lat:47.5145, lng:19.0817},
+  {name:"Ballon Budapest (City Park balloon)", cat:"#4a5d3a", lat:47.5128, lng:19.0790},
+  {name:"Budapest Zoo",                    cat:"#4a5d3a", lat:47.5186, lng:19.0716},
+  {name:"Capital Circus of Budapest",      cat:"#4a5d3a", lat:47.5197, lng:19.0788},
+  {name:"Museum of Ethnography Budapest",  cat:"#4a5d3a", lat:47.5142, lng:19.0810},
   {name:"Margaret Island",                 cat:"#4a5d3a", lat:47.5279, lng:19.0489},
   {name:"Buda Hills (Erzsébet Lookout & Libegő)", cat:"#4a5d3a", lat:47.5183, lng:18.9557},
   // --- Food ---
