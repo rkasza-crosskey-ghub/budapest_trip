@@ -132,6 +132,13 @@
     height:178px;width:100%;object-fit:cover;display:block;
     background:linear-gradient(135deg,#5a2a36,#8a3413);
   }
+  /* slideshow (több kép keresztúsztatással) */
+  .shot{position:relative;overflow:hidden}
+  .shot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.1s ease}
+  .shot img.active{opacity:1}
+  .shot .dots{position:absolute;bottom:9px;left:0;right:0;display:flex;gap:6px;justify-content:center;z-index:2}
+  .shot .dots span{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.55);box-shadow:0 0 0 1px rgba(0,0,0,.3);transition:.3s}
+  .shot .dots span.on{background:#fff;transform:scale(1.3)}
   .card .body{padding:22px 24px 24px}
   .card h3{font-size:1.3rem;margin-bottom:8px;color:var(--rust-dk);line-height:1.2}
   .card p{font-size:.97rem;opacity:.9}
@@ -374,7 +381,7 @@ const W = "?width=800";
 
 // ★ VERZIÓ — minden frissítésnél növeld a számot és írd át a dátumot (ÉÉÉÉ-HH-NN).
 //   Így a lányok a lábléc alján rögtön látják, hogy frissült-e az oldal.
-const VERSION = "1.1";
+const VERSION = "1.2";
 const UPDATED = "2026-06-11";
 
 const TARTALOM = {
@@ -398,7 +405,8 @@ const TARTALOM = {
   ],
 
   sights: [
-    { tag:{en:"Icon",sv:"Ikon"}, map:true, img:F+"Parliament%20Building%20Budapest%20Hungary.jpg"+W,
+    { tag:{en:"Icon",sv:"Ikon"}, map:true,
+      imgs:["img/parlament_1.png","img/parlament_2.png","img/parlament_3.png"],
       title:{en:"Hungarian Parliament",sv:"Ungerska parlamentet"},
       text:{en:"The neo-Gothic symbol of the Danube bank, inspired by Westminster. Stunning from the outside — the best view is from the Buda side at sunset, or from the water. Book a guided interior tour online in advance.",
             sv:"Donaustrandens nygotiska symbol, inspirerad av Westminster. Magnifik utifrån — bästa vyn är från Buda-sidan i solnedgången, eller från vattnet. Boka en guidad tur inomhus online i förväg."},
@@ -413,7 +421,8 @@ const TARTALOM = {
       text:{en:"Neo-Romanesque terraces with fairy-tale turrets and the best panorama in the city. Right next to the colourful-roofed Matthias Church. Go early morning and you'll have it almost to yourselves.",
             sv:"Nyromanska terrasser med sagolika torn och stadens bästa panorama. Precis bredvid den färgglada Matiaskyrkan. Gå tidigt på morgonen så har ni den nästan för er själva."},
       info:{en:"Upper terraces: small fee · go at sunrise",sv:"Övre terrasserna: liten avgift · gå vid soluppgång"} },
-    { tag:{en:"Church + treat",sv:"Kyrka + godis"}, map:true, link:"https://gelartorosa.com/en/", img:F+"HUN-2015-Budapest-St.%20Stephen%27s%20Basilica.jpg"+W,
+    { tag:{en:"Church + treat",sv:"Kyrka + godis"}, map:true, link:"https://gelartorosa.com/en/",
+      imgs:["img/bazilika_1.png","img/bazilika_2.png","img/bazilika_3.png","img/rozsa_1.png","img/rozsa_2.png","img/rozsa_3.png"],
       title:{en:"St. Stephen's Basilica + Gelarto Rosa",sv:"Sankt Stefansbasilikan + Gelarto Rosa"},
       text:{en:"Budapest's grandest church, with a 360° view from the dome (lift or stairs, small fee). Right beside it, stop at Gelarto Rosa for artisan gelato shaped into beautiful roses — the perfect photogenic summer treat.",
             sv:"Budapests pampigaste kyrka, med 360°-utsikt från kupolen (hiss eller trappa, liten avgift). Precis bredvid: stanna till på Gelarto Rosa för hantverksgelato format som vackra rosor — den perfekta fotogeniska sommargodbiten."},
@@ -431,12 +440,14 @@ const TARTALOM = {
   ],
 
   nature: [
-    { tag:{en:"Must-do",sv:"Måste"}, map:true, img:F+"Szechenyi%20Baths%20and%20Pool%20Budapest%208.JPG"+W,
+    { tag:{en:"Must-do",sv:"Måste"}, map:true,
+      imgs:["img/varosliget_szechenyi_furdo_1.png","img/varosliget_szechenyi_furdo_2.png","img/varosliget_szechenyi_furdo_3.png"],
       title:{en:"Széchenyi Thermal Baths",sv:"Széchenyi-badet"},
       text:{en:"A massive, gorgeous neo-Baroque palace with steaming outdoor thermal pools — the quintessential Budapest experience. Go early in the morning to beat the summer crowds.",
             sv:"Ett enormt, praktfullt nybarockt palats med ångande utomhusbassänger — den ultimata Budapest-upplevelsen. Gå tidigt på morgonen för att slippa sommarträngseln."},
       info:{en:"Bring flip-flops & a swim cap for lap pools",sv:"Ta med badtofflor & badmössa för motionsbassängerna"} },
-    { tag:{en:"Fairy-tale",sv:"Sagolikt"}, map:true, img:F+"Budapest%20Burg%20Vajdahunyad.JPG"+W,
+    { tag:{en:"Fairy-tale",sv:"Sagolikt"}, map:true,
+      imgs:["img/varosliget_vajdahunyad_1.png","img/varosliget_vajdahunyad_2.png","img/varosliget_vajdahunyad_3.png"],
       title:{en:"City Park & Vajdahunyad Castle",sv:"Stadsparken & Vajdahunyad-slottet"},
       text:{en:"Right next to the Széchenyi Baths. A storybook castle on a lake mixing Romanesque, Gothic, Renaissance and Baroque styles. In July you can rent a rowboat on the lake right in front — very photogenic for a group.",
             sv:"Precis bredvid Széchenyi-badet. Ett sagoslott vid en sjö som blandar romansk, gotisk, renässans- och barockstil. I juli kan ni hyra en roddbåt på sjön framför — väldigt fotogeniskt för ett gäng."},
@@ -447,36 +458,71 @@ const TARTALOM = {
             sv:"Hela Stadsparken (Városliget) är ett enda stort kluster — badet, Vajdahunyad-slottet och allt nedan ligger inom en kort promenad från varandra, så ni hinner lätt med flera på en avslappnad eftermiddag."},
       info:{en:"Everything below is a few minutes apart",sv:"Allt nedan ligger några minuter ifrån varandra"} },
     { tag:{en:"Bird's-eye view",sv:"Fågelperspektiv"}, map:true,
+      imgs:["img/varosliget_leggomb_1.png","img/varosliget_leggomb_2.png","img/varosliget_leggomb_3.png"],
       title:{en:"Ballon Budapest (City Park balloon)",sv:"Ballon Budapest (luftballong i Stadsparken)"},
       text:{en:"A tethered helium balloon that floats ~150 m up over City Park for a calm, 360° bird's-eye view of the whole city — a gentler, higher alternative to the Ferris wheel, right by the lake and Vajdahunyad Castle.",
             sv:"En förankrad heliumballong som svävar ~150 m upp över Stadsparken för en lugn 360°-vy över hela staden — ett mjukare, högre alternativ till pariserhjulet, precis vid sjön och Vajdahunyad-slottet."},
       info:{en:"Weather-dependent · best on a clear day",sv:"Väderberoende · bäst en klar dag"} },
     { tag:{en:"Family / Art Nouveau",sv:"Familj / Jugend"}, map:true,
+      imgs:["img/varosliget_allatkert_1.png","img/varosliget_allatkert_2.png","img/varosliget_allatkert_3.png"],
       title:{en:"Budapest Zoo & Botanical Garden",sv:"Budapests djurpark & botaniska trädgård"},
       text:{en:"One of the world's oldest zoos (1866) and a beauty in its own right — the Art Nouveau Elephant House and the giant glass Biodome are worth seeing even if animals aren't your thing. A lovely, shady stroll on a hot July day.",
             sv:"En av världens äldsta djurparker (1866) och vacker i sig — det jugendstilade elefanthuset och den enorma glas-Biodomen är värda att se även om djur inte är er grej. En härlig, skuggig promenad en varm julidag."},
       info:{en:"Go for the gorgeous Art Nouveau architecture",sv:"Gå för den vackra jugendarkitekturen"} },
     { tag:{en:"Show",sv:"Föreställning"}, map:true,
+      imgs:["img/varosliget_nagycirkusz_1.png","img/varosliget_nagycirkusz_2.png","img/varosliget_nagycirkusz_3.png"],
       title:{en:"Capital Circus of Budapest",sv:"Budapests stora cirkus"},
       text:{en:"Europe's only permanent stone-built circus, right next to the zoo. If a show falls on your dates it's a fun, slightly retro evening out — check the programme online before you go.",
             sv:"Europas enda permanenta cirkus i sten, precis bredvid djurparken. Om en föreställning hamnar på era datum är det en rolig, lite retro kväll — kolla programmet online innan ni går."},
       info:{en:"Check the show schedule online",sv:"Kolla föreställningsschemat online"} },
     { tag:{en:"Architecture",sv:"Arkitektur"}, map:true,
+      imgs:["img/varosliget_neprajzi_1.png","img/varosliget_neprajzi_2.png","img/varosliget_neprajzi_3.png"],
       title:{en:"Museum of Ethnography",sv:"Etnografiska museet"},
       text:{en:"A striking modern building on the edge of the park — its sweeping, grass-topped roof doubles as a free public terrace with great views over City Park. Worth it for the architecture and rooftop alone, with Hungarian folk culture inside.",
             sv:"En slående modern byggnad i parkens kant — det svepande, gräsklädda taket fungerar som en gratis offentlig terrass med fin utsikt över Stadsparken. Värt det för arkitekturen och taket i sig, med ungersk folkkultur inuti."},
       info:{en:"Walk up to the free rooftop terrace",sv:"Gå upp till den gratis takterrassen"} },
-    { tag:{en:"Green oasis",sv:"Grön oas"}, map:true, img:F+"Rose%20Garden%20%28S%29.%20-%20Margaret%20Island%2C%20Budapest%2C%20Hungary.JPG"+W,
+    { tag:{en:"Grand square",sv:"Pampigt torg"}, map:true,
+      imgs:["img/varosliget_hosoktere_1.png","img/varosliget_hosoktere_2.png"],
+      title:{en:"Heroes' Square",sv:"Hjältarnas torg"},
+      text:{en:"The monumental gateway to City Park — a vast square framed by colonnades of Hungary's founding chieftains and kings, with the Millennium Memorial column at its centre. Impressive by day, beautifully lit at night, and a perfect group-photo backdrop.",
+            sv:"Den monumentala porten till Stadsparken — ett väldigt torg inramat av kolonnader med Ungerns grundande hövdingar och kungar, med Millenniemonumentets pelare i mitten. Imponerande på dagen, vackert upplyst på natten, och en perfekt fotobakgrund för gänget."},
+      info:{en:"Free & open · flanked by two museums",sv:"Gratis & öppet · flankerat av två museer"} },
+    { tag:{en:"Art",sv:"Konst"}, map:true,
+      imgs:["img/varosliget_szepmuveszeti_1.png","img/varosliget_szepmuveszeti_2.png","img/varosliget_szepmuveszeti_3.png"],
+      title:{en:"Museum of Fine Arts",sv:"Konstmuseet (Szépművészeti)"},
+      text:{en:"Right on Heroes' Square — Hungary's leading art museum, with European masters from Raphael and El Greco to Monet, plus a stunning renovated Renaissance Hall. A cool, beautiful escape if a July day turns too hot.",
+            sv:"Precis vid Hjältarnas torg — Ungerns ledande konstmuseum, med europeiska mästare från Rafael och El Greco till Monet, plus en fantastisk renoverad renässanshall. En sval, vacker tillflykt om en julidag blir för varm."},
+      info:{en:"Great rainy- or hot-day option",sv:"Bra alternativ vid regn eller hetta"} },
+    { tag:{en:"Green oasis",sv:"Grön oas"}, map:true,
+      imgs:["img/margitsziget_1.png","img/margitsziget_2.png","img/margitsziget_3.png","img/margitsziget_4.png","img/margitsziget_5.png"],
       title:{en:"Margaret Island",sv:"Margaretaön"},
       text:{en:"A lush, car-free island in the middle of the Danube and the locals' favourite summer hangout. Rent a 'Bringóhintó' (canopy pedal-cart for the group), see the musical fountain, the Rose and Japanese Gardens, and grab a fröccs (wine spritzer) at a pop-up bar.",
             sv:"En frodig, bilfri ö mitt i Donau och lokalbefolkningens favoritställe på sommaren. Hyr en 'Bringóhintó' (trampbil med tak för gänget), se den musikaliska fontänen, ros- och japanträdgården, och ta en fröccs (vinspritzer) i en pop-up-bar."},
       info:{en:"2.5 km loop — rent a pedal-cart together",sv:"2,5 km runt — hyr en trampbil tillsammans"} },
-    { tag:{en:"Half-day escape",sv:"Halvdagsutflykt"}, map:true, img:F+"Children%27s%20Railway%2C%20Szechenyi%20Hill%20terminus.%20Main%20building.%20-%20Budapest%27s%2012th%20district%2C%20Hegyh%C3%A1t%20Way.JPG"+W,
-      title:{en:"The Buda Hills circuit",sv:"Buda-bergen runt"},
-      text:{en:"If you fancy nature: ride the vintage red Cogwheel Railway up, switch to the Children's Railway (a real forest train run almost entirely by schoolkids!), hike to the Erzsébet Lookout Tower, then float back down on the open-air Libegő chairlift over the treetops.",
-            sv:"Om ni vill ha natur: åk den klassiska röda kuggbanan upp, byt till Barnjärnvägen (ett riktigt skogståg som nästan helt drivs av skolbarn!), vandra till Erzsébet-utsiktstornet, och sväva sedan ner med den öppna Libegő-stolsliften över trädtopparna."},
-      info:{en:"Note: the lookout tower's inner stairs are temporarily closed (frost damage) but the views around it & the chairlift are open",
-            sv:"Obs: utsiktstornets inre trappor är tillfälligt stängda (frostskador) men vyerna runt det & stolsliften är öppna"} }
+    { tag:{en:"Buda Hills · 1",sv:"Buda-bergen · 1"}, map:true,
+      imgs:["img/fogaskereku_1.png","img/fogaskereku_2.png","img/fogaskereku_3.png"],
+      title:{en:"Cogwheel Railway (Fogaskerekű)",sv:"Kuggbanan (Fogaskerekű)"},
+      text:{en:"The start of a lovely half-day escape into the green Buda Hills. Hop on the vintage red rack railway — running since 1874 — and climb steeply up through leafy villa neighbourhoods to Széchenyi Hill. It's part of the city transport network, so your BKK pass works.",
+            sv:"Början på en härlig halvdagsutflykt upp i de gröna Buda-bergen. Kliv på den klassiska röda kuggbanan — i drift sedan 1874 — och klättra brant upp genom lummiga villakvarter till Széchenyi-berget. Den är en del av kollektivtrafiken, så ert BKK-kort gäller."},
+      info:{en:"BKK ticket valid · ride it up first",sv:"BKK-biljett gäller · åk upp med den först"} },
+    { tag:{en:"Buda Hills · 2",sv:"Buda-bergen · 2"}, map:true,
+      imgs:["img/gyermekvasut_1.png","img/gyermekvasut_2.png","img/gyermekvasut_3.png"],
+      title:{en:"Children's Railway (Gyermekvasút)",sv:"Barnjärnvägen (Gyermekvasút)"},
+      text:{en:"From the top, switch to this narrow-gauge forest railway — a real, working train almost entirely staffed by schoolkids (a charming leftover tradition). It winds ~11 km through the woods with lovely lookout stops along the way.",
+            sv:"Från toppen byter ni till denna smalspåriga skogsjärnväg — ett riktigt, fungerande tåg som nästan helt bemannas av skolbarn (en charmig kvarleva från förr). Den slingrar sig ~11 km genom skogen med fina utsiktsstopp längs vägen."},
+      info:{en:"Kids in uniform run the stations!",sv:"Barn i uniform sköter stationerna!"} },
+    { tag:{en:"Buda Hills · 3",sv:"Buda-bergen · 3"}, map:true,
+      imgs:["img/erzsebet_kilato_1.png","img/erzsebet_kilato_2.png","img/erzsebet_kilato_3.png"],
+      title:{en:"Erzsébet Lookout Tower",sv:"Erzsébet-utsiktstornet"},
+      text:{en:"On János Hill — the highest point in Budapest (527 m). The white neo-Romanesque stone tower offers huge panoramas over the whole city and the surrounding hills on a clear day.",
+            sv:"På János-berget — Budapests högsta punkt (527 m). Det vita nyromanska stentornet bjuder på enorma panoraman över hela staden och de omgivande bergen en klar dag."},
+      info:{en:"Note: inner stairs temporarily closed (frost damage), but the views around it are open",sv:"Obs: inre trapporna tillfälligt stängda (frostskador), men vyerna runt det är öppna"} },
+    { tag:{en:"Buda Hills · 4",sv:"Buda-bergen · 4"}, map:true,
+      imgs:["img/libego_1.png","img/libego_2.png","img/libego_3.png"],
+      title:{en:"Libegő Chairlift",sv:"Libegő-stolsliften"},
+      text:{en:"The perfect finale — float gently back down from János Hill on this open-air single chairlift, gliding right over the treetops with the city spread out ahead. A quiet, scenic way to end the loop.",
+            sv:"Det perfekta avslutet — sväva lugnt ner från János-berget med denna öppna stolslift, glidande precis över trädtopparna med staden utbredd framför er. Ett stilla, vackert sätt att avsluta rundan."},
+      info:{en:"Open-air · one-way down",sv:"Utomhus · enkel väg ner"} }
   ],
 
   food: [
@@ -625,7 +671,8 @@ function renderContent(){
     if(!grid) continue;
     grid.innerHTML = elemek.map(e=>`
       <article class="card reveal">
-        ${e.img ? `<img class="photo" loading="lazy" alt="${t(e.title)||''}" src="${e.img}" onerror="this.style.display='none'">`:''}
+        ${e.imgs ? `<div class="photo shot">${e.imgs.map((src,i)=>`<img class="${i===0?'active':''}" loading="lazy" alt="${t(e.title)||''}" src="${src}" onerror="this.style.display='none'">`).join('')}${e.imgs.length>1?`<div class="dots">${e.imgs.map((_,i)=>`<span class="${i===0?'on':''}"></span>`).join('')}</div>`:''}</div>`
+          : e.img ? `<img class="photo" loading="lazy" alt="${t(e.title)||''}" src="${e.img}" onerror="this.style.display='none'">`:''}
         <div class="body">
           ${e.tag ? `<span class="tag">${t(e.tag)}</span><br>`:''}
           <h3>${t(e.title)||''}</h3>
@@ -651,6 +698,28 @@ function renderContent(){
     es.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target);} });
   },{threshold:.12});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  startSlideshows();
+}
+
+// Slideshow: minden .shot képeit körbeforgatja, kártyánként eltolt időzítéssel
+let slideTimers = [];
+function startSlideshows(){
+  slideTimers.forEach(clearInterval);
+  slideTimers = [];
+  document.querySelectorAll('.shot').forEach((box, idx)=>{
+    const imgs = box.querySelectorAll('img');
+    const dots = box.querySelectorAll('.dots span');
+    if(imgs.length < 2) return;
+    let i = 0;
+    const id = setInterval(()=>{
+      imgs[i].classList.remove('active');
+      if(dots[i]) dots[i].classList.remove('on');
+      i = (i + 1) % imgs.length;
+      imgs[i].classList.add('active');
+      if(dots[i]) dots[i].classList.add('on');
+    }, 3600 + (idx % 4) * 500);
+    slideTimers.push(id);
+  });
 }
 
 function applyChrome(){
@@ -696,8 +765,13 @@ const MAPPOINTS = [
   {name:"Budapest Zoo",                    cat:"#4a5d3a", lat:47.5186, lng:19.0716},
   {name:"Capital Circus of Budapest",      cat:"#4a5d3a", lat:47.5197, lng:19.0788},
   {name:"Museum of Ethnography Budapest",  cat:"#4a5d3a", lat:47.5142, lng:19.0810},
+  {name:"Heroes' Square Budapest",         cat:"#4a5d3a", lat:47.5149, lng:19.0779},
+  {name:"Museum of Fine Arts Budapest",    cat:"#4a5d3a", lat:47.5160, lng:19.0768},
   {name:"Margaret Island",                 cat:"#4a5d3a", lat:47.5279, lng:19.0489},
-  {name:"Buda Hills (Erzsébet Lookout & Libegő)", cat:"#4a5d3a", lat:47.5183, lng:18.9557},
+  {name:"Cogwheel Railway (Fogaskerekű)",  cat:"#4a5d3a", lat:47.4990, lng:18.9889},
+  {name:"Children's Railway (Gyermekvasút)", cat:"#4a5d3a", lat:47.4988, lng:18.9893},
+  {name:"Erzsébet Lookout Tower (János-hegy)", cat:"#4a5d3a", lat:47.5183, lng:18.9557},
+  {name:"Libegő Chairlift (János-hegy)",    cat:"#4a5d3a", lat:47.5170, lng:18.9600},
   // --- Food ---
   {name:"Cirkusz",                         cat:"#c9962e", lat:47.4970, lng:19.0593},
   {name:"Béchamel",                        cat:"#c9962e", lat:47.5045, lng:19.0512},
