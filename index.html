@@ -381,8 +381,8 @@ const W = "?width=800";
 
 // ★ VERZIÓ — minden frissítésnél növeld a számot és írd át a dátumot (ÉÉÉÉ-HH-NN).
 //   Így a lányok a lábléc alján rögtön látják, hogy frissült-e az oldal.
-const VERSION = "2.0";
-const UPDATED = "2026-06-12";
+const VERSION = "2.1";
+const UPDATED = "2026-06-22";
 
 const TARTALOM = {
 
@@ -576,6 +576,11 @@ const TARTALOM = {
   ],
 
   night: [
+    { tag:{en:"★ Read first — safety",sv:"★ Läs först — säkerhet"}, map:false,
+      title:{en:"A safe girls' night out",sv:"En trygg tjejkväll"},
+      text:{en:"Budapest is very safe at night, but two things to know. (1) The classic scam: friendly strangers (often women) invite tourists to 'a great bar' nearby — you end up with a huge bill and intimidating staff. Only go to places you chose yourselves, like the ones below; never follow a street invite. (2) Watch your drinks, never leave them unattended, and order from the bar. Agree on a meeting point, keep your phones charged, head home together by Bolt, and you'll have a perfect night.",
+            sv:"Budapest är mycket tryggt på natten, men två saker är bra att veta. (1) Den klassiska bluffen: vänliga främlingar (ofta kvinnor) bjuder in turister till 'en grym bar' i närheten — ni slutar med en enorm nota och hotfull personal. Gå bara till ställen ni själva valt, som de nedan; följ aldrig med på en gatuinbjudan. (2) Håll koll på era drinkar, lämna dem aldrig obevakade, och beställ vid baren. Kom överens om en mötesplats, håll telefonerna laddade, åk hem tillsammans med Bolt — så blir det en perfekt kväll."},
+      info:{en:"Stick to chosen venues · Bolt home together · Emergency 112",sv:"Håll er till valda ställen · Bolt hem tillsammans · Nödnummer 112"} },
     { tag:{en:"Original",sv:"Originalet"}, map:true, img:F+"A%20Bar%20in%20Szimpla%20Kert.jpg"+W,
       title:{en:"Szimpla Kert",sv:"Szimpla Kert"},
       text:{en:"The first and most famous ruin bar — an eclectic, chaotic, wonderful maze of mismatched furniture, plants and art in a crumbling old building. Go late afternoon / early evening for a drink to skip the late-night queues.",
@@ -589,6 +594,16 @@ const TARTALOM = {
       text:{en:"One of the city's top cocktail bars if you want a proper mixology experience with expert bartenders.",
             sv:"En av stadens bästa cocktailbarer om ni vill ha en riktig mixologi-upplevelse med skickliga bartenders."},
       info:{en:"Intimate — reserve ahead",sv:"Litet ställe — boka i förväg"} },
+    { tag:{en:"Wine & buzz",sv:"Vin & stämning"}, map:true,
+      title:{en:"DiVino Bazilika",sv:"DiVino Bazilika"},
+      text:{en:"A lively, popular wine bar right on the Basilica square, pouring small Hungarian producers by the glass. Buzzing but relaxed, well-lit and very central — an easy, safe spot to start the evening as a group.",
+            sv:"En livlig, populär vinbar precis vid Basilika-torget, som serverar små ungerska producenter glasvis. Sprudlande men avslappnat, väl upplyst och mycket centralt — ett enkelt, tryggt ställe att börja kvällen på som grupp."},
+      info:{en:"Right by St. Stephen's · great to start the night",sv:"Precis vid Sankt Stefan · perfekt kvällsstart"} },
+    { tag:{en:"Rooftop",sv:"Takbar"}, map:true,
+      title:{en:"360 Bar",sv:"360 Bar"},
+      text:{en:"A favourite rooftop on grand Andrássy Avenue with 360° city views, cocktails and a fun but well-run crowd. In summer there's an igloo-free open terrace — lovely at sunset. Central and easy to reach on foot.",
+            sv:"En populär takbar på pampiga Andrássy-avenyn med 360°-utsikt, cocktails och en härlig men välskött publik. På sommaren en öppen terrass — ljuvlig i solnedgången. Centralt och lätt att nå till fots."},
+      info:{en:"On Andrássy Ave · sunset drinks",sv:"På Andrássy-avenyn · solnedgångsdrinkar"} },
     { tag:{en:"Views",sv:"Utsikt"}, map:true, img:F+"Budapest%2C%20V.%20Erzs%C3%A9bet%20t%C3%A9r%2C%20Budapest%20Sziget%20Eye.JPG"+W,
       title:{en:"Budapest Eye",sv:"Budapest Eye"},
       text:{en:"A giant Ferris wheel on Erzsébet Square, a 2-minute walk from the Basilica. Sweeping views over the Pest rooftops to the Buda hills — especially magical at sunset or after dark. Grab a chimney cake (kürtőskalács) nearby.",
@@ -802,6 +817,8 @@ const MAPPOINTS = [
   {name:"Szimpla Kert",                    cat:"#6a3d7a", lat:47.4976, lng:19.0639},
   {name:"High Note SkyBar",                cat:"#6a3d7a", lat:47.5008, lng:19.0524},
   {name:"Boutiq'Bar",                      cat:"#6a3d7a", lat:47.4986, lng:19.0541},
+  {name:"DiVino Bazilika",                 cat:"#6a3d7a", lat:47.5010, lng:19.0532},
+  {name:"360 Bar Budapest",                cat:"#6a3d7a", lat:47.5028, lng:19.0606},
   {name:"Budapest Eye",                    cat:"#6a3d7a", lat:47.4979, lng:19.0529},
   {name:"Danube cruise (Vigadó tér pier)", cat:"#6a3d7a", lat:47.4958, lng:19.0489},
   // --- Neighbourhoods (where to stay) ---
