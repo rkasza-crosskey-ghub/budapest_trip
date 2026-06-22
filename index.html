@@ -381,7 +381,7 @@ const W = "?width=800";
 
 // ★ VERZIÓ — minden frissítésnél növeld a számot és írd át a dátumot (ÉÉÉÉ-HH-NN).
 //   Így a lányok a lábléc alján rögtön látják, hogy frissült-e az oldal.
-const VERSION = "2.2";
+const VERSION = "2.3";
 const UPDATED = "2026-06-22";
 
 const TARTALOM = {
@@ -514,6 +514,26 @@ const TARTALOM = {
       text:{en:"A lush, car-free island in the middle of the Danube and the locals' favourite summer hangout. Rent a 'Bringóhintó' (canopy pedal-cart for the group), see the musical fountain, the Rose and Japanese Gardens, and grab a fröccs (wine spritzer) at a pop-up bar.",
             sv:"En frodig, bilfri ö mitt i Donau och lokalbefolkningens favoritställe på sommaren. Hyr en 'Bringóhintó' (trampbil med tak för gänget), se den musikaliska fontänen, ros- och japanträdgården, och ta en fröccs (vinspritzer) i en pop-up-bar."},
       info:{en:"2.5 km loop — rent a pedal-cart together",sv:"2,5 km runt — hyr en trampbil tillsammans"} },
+    { tag:{en:"☀ Hot day? Read this",sv:"☀ Het dag? Läs här"}, map:false,
+      title:{en:"Beating the July heat",sv:"Att klara julivärmen"},
+      text:{en:"July can hit 30–35°C. The trick: sightsee early morning and after ~6pm, and escape the midday heat somewhere cool. Best refuges — a splash day at <b>Palatinus Strand</b>, the constant-12°C <b>caves</b>, the air-conditioned museums you've already got here (<b>Fine Arts</b>, <b>House of Music</b>), the shady, breezy <b>Buda Hills</b> and <b>Libegő</b>, or a beach day at <b>Lupa</b>. Carry a refillable bottle — Budapest's street drinking fountains are safe — and an evening Danube cruise is blissfully cool too.",
+            sv:"Juli kan nå 30–35°C. Knepet: sevärdheter tidigt på morgonen och efter ~18, och fly middagshettan någonstans svalt. Bästa tillflykterna — en plaskdag på <b>Palatinus Strand</b>, de konstant 12°-iga <b>grottorna</b>, de luftkonditionerade museerna ni redan har här (<b>Konstmuseet</b>, <b>Musikens hus</b>), de skuggiga, svala <b>Buda-bergen</b> och <b>Libegő</b>, eller en stranddag vid <b>Lupa</b>. Ha med en påfyllbar flaska — Budapests dricksvattenfontäner är säkra — och en kvällskryssning på Donau är härligt sval."},
+      info:{en:"Mornings & evenings out · cool spots at midday",sv:"Ut på morgnar & kvällar · svala ställen mitt på dagen"} },
+    { tag:{en:"Splash day",sv:"Plaskdag"}, map:true,
+      title:{en:"Palatinus Strand",sv:"Palatinus Strand"},
+      text:{en:"A huge, leafy outdoor pool complex on Margaret Island — wave pool, slides, thermal and swimming pools and big lawns to sunbathe on. The biggest 'beach' right in the city centre and a brilliant, fun group day when it's scorching. Go earlyish on a hot day, it fills up.",
+            sv:"Ett enormt, lummigt utomhusbadkomplex på Margaretaön — vågbassäng, rutschkanor, termal- och simbassänger och stora gräsmattor att sola på. Den största 'stranden' mitt i stan och en lysande, rolig gruppdag när det är glödhett. Gå ganska tidigt en het dag, det fylls på."},
+      info:{en:"On Margaret Island · bring swimwear & a towel",sv:"På Margaretaön · ta med baddräkt & handduk"} },
+    { tag:{en:"Cool escape",sv:"Sval flykt"}, map:true,
+      title:{en:"Szemlő-hegyi & Pál-völgyi Caves",sv:"Szemlő-hegyi- & Pál-völgyi-grottorna"},
+      text:{en:"A constant ~10–12°C all year — the ultimate escape from a heatwave. These limestone caves under the Buda hills offer short, easy guided tours (~35–40 min) along lit walkways past beautiful mineral formations. Bring a light jacket — it's genuinely chilly inside!",
+            sv:"Konstant ~10–12°C året om — den ultimata flykten från en värmebölja. Dessa kalkstensgrottor under Buda-bergen erbjuder korta, lätta guidade turer (~35–40 min) längs upplysta gångar förbi vackra mineralformationer. Ta med en tunn jacka — det är riktigt kyligt inne!"},
+      info:{en:"Buda side · short guided tours",sv:"Buda-sidan · korta guidade turer"} },
+    { tag:{en:"Beach lake",sv:"Strandsjö"}, map:true,
+      title:{en:"Lupa Beach",sv:"Lupa Beach"},
+      text:{en:"A glam lake 'beach' just north of the city — white sand, palm trees, clear water, sun loungers, cocktails and beach food. The upscale Lupa Prémium side is lovely and well-kept for a girls' day. No car needed: in summer a direct shuttle runs from St. Stephen's Basilica, or take the H5 HÉV train from Batthyány tér to Budakalász, then the cheap electric Lupa shuttle (HUF 200). Plan it as a half/full-day trip.",
+            sv:"En glamorös sjö-'strand' strax norr om stan — vit sand, palmer, klart vatten, solstolar, cocktails och strandmat. Den exklusiva Lupa Prémium-sidan är fin och välskött för en tjejdag. Ingen bil behövs: på sommaren går en direktbuss från Sankt Stefansbasilikan, eller ta H5-HÉV-tåget från Batthyány tér till Budakalász och sedan den billiga elektriska Lupa-shuttlen (200 HUF). Planera den som en halv-/heldagstur."},
+      info:{en:"Car-free: summer shuttle from the Basilica, or H5 HÉV + shuttle",sv:"Bilfritt: sommarshuttle från Basilikan, eller H5 HÉV + shuttle"} },
     { tag:{en:"Buda Hills · 1",sv:"Buda-bergen · 1"}, map:true,
       imgs:["img/fogaskereku_1.png","img/fogaskereku_2.png","img/fogaskereku_3.png"],
       title:{en:"Cogwheel Railway (Fogaskerekű)",sv:"Kuggbanan (Fogaskerekű)"},
@@ -805,6 +825,9 @@ const MAPPOINTS = [
   {name:"Museum of Fine Arts Budapest",    cat:"#4a5d3a", lat:47.5160, lng:19.0768},
   {name:"House of Music Hungary",          cat:"#4a5d3a", lat:47.5137, lng:19.0822},
   {name:"Margaret Island",                 cat:"#4a5d3a", lat:47.5279, lng:19.0489},
+  {name:"Palatinus Strand",                cat:"#4a5d3a", lat:47.5318, lng:19.0476},
+  {name:"Szemlő-hegyi Cave",               cat:"#4a5d3a", lat:47.5269, lng:18.9947},
+  {name:"Lupa Beach Budakalász",           cat:"#4a5d3a", lat:47.6280, lng:19.0670},
   {name:"Cogwheel Railway (Fogaskerekű)",  cat:"#4a5d3a", lat:47.4990, lng:18.9889},
   {name:"Children's Railway (Gyermekvasút)", cat:"#4a5d3a", lat:47.4988, lng:18.9893},
   {name:"Erzsébet Lookout Tower (János-hegy)", cat:"#4a5d3a", lat:47.5183, lng:18.9557},
